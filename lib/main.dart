@@ -13,8 +13,6 @@ class ExampleDestination {
 
 const List<ExampleDestination> destinations = <ExampleDestination>[
   ExampleDestination(
-      'Home', Icon(Icons.widgets_outlined), Icon(Icons.widgets)),
-  ExampleDestination(
       'Trainingen', Icon(Icons.school_outlined), Icon(Icons.school)),
   ExampleDestination(
       'Beheer', Icon(Icons.text_snippet_outlined), Icon(Icons.text_snippet)),
@@ -47,7 +45,6 @@ class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
   int screenIndex = 0;
   late bool showNavigationDrawer;
   final List<Widget> screens = [
-    const HomeScreen(),
     const Trainings(),
     const BeheerScreen(),
 
