@@ -12,12 +12,24 @@ class _TrainingsState extends State<Trainings> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(140.0),
+      margin: const EdgeInsets.only(left: 140, right: 140),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Text(
+                'Trainingen',
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 25,
+                    textStyle: const TextStyle(color: Colors.blue)),
+              ),
+            ),
+          ),
           Text(
-            'Mijn inscrhijvingen',
+            'Mijn inschrijvingen',
             style: GoogleFonts.roboto(
                 fontWeight: FontWeight.w700,
                 fontSize: 42,
@@ -41,7 +53,7 @@ class GetAllSubscribedTrainings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(140.0),
+      // margin: const EdgeInsets.all(140.0),
       child: Expanded(
         child: Wrap(
           children: [

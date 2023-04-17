@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:web_application/beheer.dart';
-import 'package:web_application/homescreen.dart';
 import 'package:web_application/trainings.dart';
+import 'login_screen.dart';
+
 
 class ExampleDestination {
   const ExampleDestination(this.label, this.icon, this.selectedIcon);
@@ -11,13 +12,17 @@ class ExampleDestination {
   final Widget selectedIcon;
 }
 
-const List<ExampleDestination> destinations = <ExampleDestination>[
+const List<ExampleDestination>? destinations = <ExampleDestination>[
   ExampleDestination(
       'Trainingen', Icon(Icons.school_outlined), Icon(Icons.school)),
   ExampleDestination(
       'Beheer', Icon(Icons.text_snippet_outlined), Icon(Icons.text_snippet)),
   ExampleDestination(
       'page 3', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)),
+
+      1 == 2 ?   ExampleDestination(
+      'GOED', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)) :   ExampleDestination(
+      'FOUT', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)),
 ];
 
 void main() {
@@ -45,6 +50,7 @@ class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
   int screenIndex = 0;
   late bool showNavigationDrawer;
   final List<Widget> screens = [
+    const LoginExample(),
     const Trainings(),
     const BeheerScreen(),
 
@@ -68,7 +74,7 @@ class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
         selectedIndex: screenIndex,
         onDestinationSelected: (screenIndex) =>
           setState(() => this.screenIndex = screenIndex),
-        destinations: destinations.map((ExampleDestination destination) {
+        destinations: destinations!.map((ExampleDestination destination) {
           return NavigationDestination(
             label: destination.label,
             icon: destination.icon,
@@ -95,7 +101,7 @@ class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
-          ...destinations.map((ExampleDestination destination) {
+          ...destinations!.map((ExampleDestination destination) {
             return NavigationDrawerDestination(
               label: Text(destination.label),
               icon: destination.icon,
