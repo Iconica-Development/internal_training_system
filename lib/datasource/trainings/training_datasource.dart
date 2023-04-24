@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:web_application/firebase_options.dart';
 
+import '../../data_interface/models/training_data_model.dart';
+
 class TrainingDatasource {
-  Future<void> createTraining(String trainingName, String trainingDesc) async {
+  Future<void> createTraining(TrainingDataModel trainingDataModel) async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
