@@ -1,27 +1,42 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:web_application/firebase_options.dart';
 
 import '../../data_interface/models/training_data_model.dart';
 
 class TrainingDatasource {
+  TrainingDatasource({
+    required this.firebaseApp,
+  });
+
+  final FirebaseApp firebaseApp;
+
+  late final _trainingCollection =
+      FirebaseFirestore.instanceFor(app: firebaseApp)
+          .collection('flutter_rbac_roles')
+          .withConverter(
+    fromFirestore: (snapshot, options) {
+      return TrainingDataModel.fromMap(snapshot.id, snapshot.data()!);
+    },
+    toFirestore: (object, options) {
+      return object.toMap();
+    },
+  );
+
   Future<void> createTraining(TrainingDataModel trainingDataModel) async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-
     //Check if training already exists
-  //   var userSnapshot = await _userCollection.doc(userId).get();
-  //   if (userSnapshot.exists) {
-  //     print('This training already exist');
-  //   }
+      var trainingSnapshot = await _trainingCollection.doc(trainingDataModel.id).get();
+      if (trainingSnapshot.exists) {
+        print('This training already exist');
+      }
 
-  //   //Insert training into database
-  //   _roleCollection.doc(role.id).set(role);
-  // }
+    //   //Insert training into database
+    //   _roleCollection.doc(role.id).set(role);
+    // }
 
-  // Future<void> deleteTraining() {
-  //       await Firebase.initializeApp(
-  //     options: DefaultFirebaseOptions.currentPlatform,
-  //   );
+    // Future<void> deleteTraining() {
+    //       await Firebase.initializeApp(
+    //     options: DefaultFirebaseOptions.currentPlatform,
+    //   );
   }
 }
