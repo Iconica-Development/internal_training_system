@@ -9,6 +9,7 @@ class CreateTraining extends StatefulWidget {
 }
 
 class _CreateTrainingState extends State<CreateTraining> {
+
   @override
   Widget build(BuildContext context) {
     return Stack(

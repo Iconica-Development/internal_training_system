@@ -1,0 +1,191 @@
+{
+  "project_info": {
+    "project_number": "414335552159",
+    "firebase_url": "https://iconica-training-system-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "iconica-training-system",
+    "storage_bucket": "iconica-training-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414335552159:android:25506798192013a4b070aa",
+        "android_client_info": {
+          "package_name": "com.example.rbac_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz9I4pdPszLYkA1V5ArtN3UkMDb3fqLUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414335552159-ntf7vhfan3ljp4re3oivmhuvcspcohd8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rbacFirebase"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414335552159:android:19dd5f41e0a0bbd3b070aa",
+        "android_client_info": {
+          "package_name": "com.example.web_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz9I4pdPszLYkA1V5ArtN3UkMDb3fqLUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414335552159-ntf7vhfan3ljp4re3oivmhuvcspcohd8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rbacFirebase"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414335552159:android:32961c83c9d5705db070aa",
+        "android_client_info": {
+          "package_name": "com.ico.training"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz9I4pdPszLYkA1V5ArtN3UkMDb3fqLUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414335552159-ntf7vhfan3ljp4re3oivmhuvcspcohd8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rbacFirebase"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414335552159:android:67742818d396b598b070aa",
+        "android_client_info": {
+          "package_name": "com.iconica.training"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz9I4pdPszLYkA1V5ArtN3UkMDb3fqLUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414335552159-ntf7vhfan3ljp4re3oivmhuvcspcohd8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rbacFirebase"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414335552159:android:39c36b95e8fbdf74b070aa",
+        "android_client_info": {
+          "package_name": "iconica.training.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz9I4pdPszLYkA1V5ArtN3UkMDb3fqLUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414335552159-sn2fr5d5vs574lh26f37ols12uvmu1cn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414335552159-ntf7vhfan3ljp4re3oivmhuvcspcohd8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rbacFirebase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

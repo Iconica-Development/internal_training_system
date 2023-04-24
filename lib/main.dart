@@ -31,7 +31,8 @@ void main() {
     MaterialApp(
       title: 'NavigationDrawer Example',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(useMaterial3: true,
+      primarySwatch: Colors.blue),
       home: const NavigationDrawerExample(),
     ),
   );
