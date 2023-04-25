@@ -16,6 +16,7 @@ class _CreateTrainingState extends State<CreateTraining> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descController = TextEditingController();
+  final _goalsController = TextEditingController();
 
   void createTraining(String trainingName, String trainingDesc) async {
     var trainingService = TrainingService(
@@ -30,7 +31,8 @@ class _CreateTrainingState extends State<CreateTraining> {
       // Save user's name in Firestore
       await FirebaseFirestore.instance.collection('trainings').doc().set({
         'trainingName': _nameController.text,
-        'trainingDesc': _descController.text
+        'trainingDesc': _descController.text,
+        'trainingsGoals': _goalsController.text
       });
 
       // Show success message
@@ -103,18 +105,37 @@ class _CreateTrainingState extends State<CreateTraining> {
                                     },
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: TextFormField(
+                                    controller: _descController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Training omschrijving',
+                                      hintText:
+                                          'Voer een omschrijving in voor de training',
+                                      filled: true,
+                                    ),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Please enter a desc';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
                                 TextFormField(
-                                  controller: _descController,
+                                  controller: _goalsController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
-                                    labelText: 'Training omschrijving',
+                                    labelText: 'Training goals',
                                     hintText:
-                                        'Voer een omschrijving in voor de training',
+                                        'Voer een goal in',
                                     filled: true,
                                   ),
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return 'Please enter desc';
+                                      return 'Please enter goal';
                                     }
                                     return null;
                                   },
