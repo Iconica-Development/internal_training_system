@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:web_application/screens/Trainings/create_training_screen.dart';
-import 'package:web_application/beheer.dart';
-import 'package:web_application/trainings.dart';
+import 'package:web_application/screens/Trainings/admin_home_screen.dart';
+import 'package:web_application/screens/Trainings/trainings_home_screen.dart';
 import 'firebase_options.dart';
 import 'login_screen.dart';
 
@@ -54,7 +54,7 @@ class NavigationDrawerExample extends StatefulWidget {
 class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  int screenIndex = 2;
+  int screenIndex = 1;
   late bool showNavigationDrawer;
   final List<Widget> screens = [
     const Trainings(),
