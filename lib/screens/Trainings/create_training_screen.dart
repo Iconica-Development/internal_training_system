@@ -18,22 +18,18 @@ class _CreateTrainingState extends State<CreateTraining> {
   final _descController = TextEditingController();
   final _goalsController = TextEditingController();
 
-  void createTraining(String trainingName, String trainingDesc) async {
-    var trainingService = TrainingService(
-      TrainingDatasource(firebaseApp: Firebase.app()),
-    );
+  void createTraining(String trainingName, String trainingDesc, String trainingGoals) async {
 
-    await trainingService.createTraining('TEST', 'TEST');
   }
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       // Save user's name in Firestore
-      await FirebaseFirestore.instance.collection('trainings').doc().set({
-        'trainingName': _nameController.text,
-        'trainingDesc': _descController.text,
-        'trainingsGoals': _goalsController.text
-      });
+    var trainingService = TrainingService(
+      TrainingDatasource(firebaseApp: Firebase.app()),
+    );
+
+    await trainingService.createTraining(_nameController.text, _descController.text, _goalsController.text);
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(

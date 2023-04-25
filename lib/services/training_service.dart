@@ -8,8 +8,8 @@ class TrainingService{
 
   TrainingService(TrainingDatasource datasource): _datasource = datasource;
 
-  Future<void> createTraining(String trainingName, String trainingDesc) async {
-    TrainingDataModel trainingDataModel = TrainingDataModel(id: '', trainingName: trainingName, trainingDesc: trainingDesc);
+  Future<void> createTraining(String trainingName, String trainingDesc, String trainingGoals) async {
+    TrainingDataModel trainingDataModel = TrainingDataModel(id: '', trainingName: trainingName, trainingDesc: trainingDesc, trainingGoals: trainingGoals);
 
     _datasource.createTraining(trainingDataModel);
   }
