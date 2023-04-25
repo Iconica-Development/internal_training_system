@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:web_application/Trainings/create_training_screen.dart';
+import 'package:web_application/screens/Trainings/create_training_screen.dart';
 import 'package:web_application/beheer.dart';
 import 'package:web_application/trainings.dart';
+import 'firebase_options.dart';
 import 'login_screen.dart';
 
 class ExampleDestination {
@@ -26,7 +28,10 @@ const List<ExampleDestination>? destinations = <ExampleDestination>[
           'FOUT', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)),
 ];
 
-void main() {
+void main() async{
+    await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MaterialApp(
       title: 'NavigationDrawer Example',

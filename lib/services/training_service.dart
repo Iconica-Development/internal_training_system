@@ -1,14 +1,17 @@
 
-import 'package:web_application/data_interface/models/training_data_model.dart';
-import 'package:web_application/datasource/trainings/training_datasource.dart';
+import 'package:web_application/services/training_data_model.dart';
+
+import '../datasource/trainings/training_datasource.dart';
 
 class TrainingService{
-  final TrainingDatasource _trainingDatasource;
+  final TrainingDatasource _datasource;
 
-  TrainingService(TrainingDatasource trainingDatasource): _trainingDatasource = trainingDatasource;
+  TrainingService(TrainingDatasource datasource): _datasource = datasource;
 
-  Future<void> createTraining(TrainingDataModel trainingDataModel) async {
-    _trainingDatasource.createTraining(trainingDataModel);
+  Future<void> createTraining(String trainingName, String trainingDesc) async {
+    TrainingDataModel trainingDataModel = TrainingDataModel(id: '', trainingName: trainingName, trainingDesc: trainingDesc);
+
+    _datasource.createTraining(trainingDataModel);
   }
 
 }
