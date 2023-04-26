@@ -10,75 +10,89 @@ class BeheerScreen extends StatefulWidget {
 }
 
 class _BeheerScreenState extends State<BeheerScreen> {
+  final List<List<String>> gridTitles = [
+    [
+      'Training inplannen',
+      'Training aanmaken',
+      'Training aanpassen',
+      'Item 4',
+      'Item 5'
+    ],
+    ['Flutter Basics', 'Item 7', 'Item 8'],
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.only(left: 140, right: 140),
-        child: Column(children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Text(
-                'Beheer',
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 25,
-                    textStyle: const TextStyle(color: Colors.blue)),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Text(
+                    'Beheer',
+                    style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 25,
+                        textStyle: const TextStyle(color: Colors.blue)),
+                  ),
+                ),
               ),
-            ),
+              buildGrid('Training', gridTitles[0]),
+              SizedBox(height: 16),
+              buildGrid('Admin', gridTitles[1]),
+            ],
           ),
-          Expanded(
-            child: const CardGrid(
-              titles: [
-                'Training inplannen',
-                'Training aanmaken',
-                'test',
-                'test',
-                'test',
-                'test',
-                'test'
-              ],
-              links: [
-                'LINK ',
-                'Training aanmaken',
-                'test',
-                'test',
-                'test',
-                'test',
-                'test'
-              ],
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Text(
-                'Admin',
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 25,
-                    textStyle: const TextStyle(color: Colors.blue)),
-              ),
-            ),
-          ),
-        ]));
+        ),
+      ),
+    );
   }
-}
 
-class CardWidget extends StatelessWidget {
-  final String title;
-  final String link;
+  Widget buildGrid(String rowName, List<String> cards) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildGridTitle(rowName),
+        SizedBox(height: 16),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 3 / 2,
+          ),
+          itemCount: cards.length,
+          itemBuilder: (BuildContext context, int gridIndex) {
+            return buildInkWellCard(cards[gridIndex]);
+          },
+        ),
+        SizedBox(height: 32),
+      ],
+    );
+  }
 
-  const CardWidget({required this.title, required this.link});
+  Widget buildGridTitle(String gridCategoryName) {
+    return Text(
+      gridCategoryName,
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildInkWellCard(String title) {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
         onTap: () {
-          debugPrint(link);
+          debugPrint('s');
         },
         child: SizedBox(
           width: 400,
@@ -97,32 +111,6 @@ class CardWidget extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CardGrid extends StatelessWidget {
-  final List<String> titles;
-  final List<String> links;
-
-  const CardGrid({required this.titles, required this.links});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 3 / 2,
-      ),
-      itemCount: titles.length,
-      itemBuilder: (BuildContext context, int index) {
-        return CardWidget(
-          title: titles[index],
-          link: links[index],
-        );
-      },
     );
   }
 }
