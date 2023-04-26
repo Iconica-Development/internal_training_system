@@ -53,7 +53,7 @@ class NavigationDrawerExample extends StatefulWidget {
 class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  int screenIndex = 0;
+  int screenIndex = 1;
   late bool showNavigationDrawer;
   final List<Widget> screens = [
     Trainings(),
