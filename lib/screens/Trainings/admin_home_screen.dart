@@ -13,7 +13,7 @@ class _BeheerScreenState extends State<BeheerScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(left: 40, right: 40),
+        margin: const EdgeInsets.only(left: 140, right: 140),
         child: Column(children: [
           Center(
             child: Padding(
@@ -111,7 +111,7 @@ class CardGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
+        crossAxisCount: 3,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         childAspectRatio: 3 / 2,

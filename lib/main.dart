@@ -28,16 +28,15 @@ const List<ExampleDestination>? destinations = <ExampleDestination>[
           'FOUT', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)),
 ];
 
-void main() async{
-    await Firebase.initializeApp(
+void main() async {
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
     MaterialApp(
       title: 'NavigationDrawer Example',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true,
-      primarySwatch: Colors.blue),
+      theme: ThemeData(useMaterial3: true, primarySwatch: Colors.blue),
       home: const NavigationDrawerExample(),
     ),
   );
@@ -54,14 +53,13 @@ class NavigationDrawerExample extends StatefulWidget {
 class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  int screenIndex = 1;
+  int screenIndex = 0;
   late bool showNavigationDrawer;
   final List<Widget> screens = [
-    const Trainings(),
+    Trainings(),
     const BeheerScreen(),
     const CreateTraining(),
     const LoginExample(),
-
   ];
 
   void handleScreenChanged(int selectedScreen) {
