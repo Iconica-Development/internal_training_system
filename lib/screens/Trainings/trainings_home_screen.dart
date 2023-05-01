@@ -11,16 +11,16 @@ class Trainings extends StatefulWidget {
 class _TrainingsState extends State<Trainings> {
   final List<List<List<String>>> gridTitles = [
     [
-      ['Firebase training', '10-10-2000'],
-      ['Firebase training', '10-10-2000'],
+      ['Firebase training', '10-10-2000', 'LINK'],
+      ['Firebase training', '10-10-2000', 'LINK'],
     ],
     [
-      ['Firebase training', '10-10-2000'],
-      ['Firebase training', '10-10-2000'],
+      ['Firebase training', '10-10-2000', 'LINK'],
+      ['Firebase training', '10-10-2000', 'LINK'],
     ],
     [
-      ['Firebase training', '10-10-2000'],
-      ['Firebase training', '10-10-2000'],
+      ['Firebase training', '10-10-2000', 'LINK'],
+      ['Firebase training', '10-10-2000', 'LINK'],
     ],
   ];
 

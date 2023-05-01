@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:web_application/screens/Trainings/create_training_screen.dart';
 
@@ -10,15 +11,17 @@ class BeheerScreen extends StatefulWidget {
 }
 
 class _BeheerScreenState extends State<BeheerScreen> {
-  final List<List<String>> gridTitles = [
+  final List<List<List<String>>> gridTitles = [
     [
-      'Training inplannen',
-      'Training aanmaken',
-      'Training aanpassen',
-      'Item 4',
-      'Item 5'
+      ['Training inplannen', '/login'],
+      ['Training aanmaken', '/login'],
+      ['Training aanpassen', '/login'],
+      ['Item 4', 'LINK'],
     ],
-    ['Flutter Basics', 'Item 7', 'Item 8'],
+    [
+      ['Training aanpassen', 'LINK'],
+      ['Item 4', 'LINK'],
+    ],
   ];
 
   @override
@@ -51,7 +54,7 @@ class _BeheerScreenState extends State<BeheerScreen> {
     );
   }
 
-  Widget buildGrid(String rowName, List<String> cards) {
+  Widget buildGrid(String rowName, List<List<String>> cards) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -68,7 +71,7 @@ class _BeheerScreenState extends State<BeheerScreen> {
           ),
           itemCount: cards.length,
           itemBuilder: (BuildContext context, int gridIndex) {
-            return buildInkWellCard(cards[gridIndex]);
+            return buildInkWellCard(cards[gridIndex][0], cards[gridIndex][1]);
           },
         ),
         SizedBox(height: 32),
@@ -86,13 +89,13 @@ class _BeheerScreenState extends State<BeheerScreen> {
     );
   }
 
-  Widget buildInkWellCard(String title) {
+  Widget buildInkWellCard(String title, String link) {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
         onTap: () {
-          debugPrint('s');
+          context.go(link);
         },
         child: SizedBox(
           width: 400,
