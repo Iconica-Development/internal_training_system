@@ -88,6 +88,16 @@ class ScaffoldWithNavbar extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
+                NavigationRailDestination(
+                  icon: Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'Logout',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
               ],
               selectedIndex: _calculateSelectedIndex(context),
             ),
