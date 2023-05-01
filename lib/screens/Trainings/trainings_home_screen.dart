@@ -9,9 +9,19 @@ class Trainings extends StatefulWidget {
 }
 
 class _TrainingsState extends State<Trainings> {
-  final List<List<String>> gridTitles = [
-    ['Firebase training', 'Item 2', 'Item 3', 'Item 4', 'Item 5'],
-    ['Flutter Basics', 'Item 7', 'Item 8'],
+  final List<List<List<String>>> gridTitles = [
+    [
+      ['Firebase training', '10-10-2000'],
+      ['Firebase training', '10-10-2000'],
+    ],
+    [
+      ['Firebase training', '10-10-2000'],
+      ['Firebase training', '10-10-2000'],
+    ],
+    [
+      ['Firebase training', '10-10-2000'],
+      ['Firebase training', '10-10-2000'],
+    ],
   ];
 
   @override
@@ -19,7 +29,7 @@ class _TrainingsState extends State<Trainings> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Center(
@@ -35,9 +45,9 @@ class _TrainingsState extends State<Trainings> {
                 ),
               ),
               buildGrid('Mijn inschrijvingen', gridTitles[0]),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               buildGrid('Aankomende trainingen', gridTitles[1]),
-              buildGrid('Trainingen die ik heb gevolgd', gridTitles[1]),
+              buildGrid('Trainingen die ik heb gevolgd', gridTitles[2]),
             ],
           ),
         ),
@@ -45,16 +55,16 @@ class _TrainingsState extends State<Trainings> {
     );
   }
 
-  Widget buildGrid(String rowName, List<String> cards) {
+  Widget buildGrid(String rowName, List<List<String>> cards) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildGridTitle(rowName),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         GridView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
@@ -62,10 +72,10 @@ class _TrainingsState extends State<Trainings> {
           ),
           itemCount: cards.length,
           itemBuilder: (BuildContext context, int gridIndex) {
-            return buildInkWellCard(cards[gridIndex]);
+            return buildInkWellCard(cards[gridIndex][0], cards[gridIndex][1]);
           },
         ),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
       ],
     );
   }
@@ -73,14 +83,14 @@ class _TrainingsState extends State<Trainings> {
   Widget buildGridTitle(String gridCategoryName) {
     return Text(
       gridCategoryName,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.bold,
       ),
     );
   }
 
-  Widget buildInkWellCard(String title) {
+  Widget buildInkWellCard(String title, String trainingDate) {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
@@ -98,7 +108,11 @@ class _TrainingsState extends State<Trainings> {
               children: [
                 Text(
                   title,
-                  style: TextStyle(fontSize: 30),
+                  style: const TextStyle(fontSize: 30),
+                ),
+                Text(
+                  trainingDate,
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),

@@ -49,11 +49,9 @@ class ScaffoldWithNavbar extends StatelessWidget {
                 switch (value) {
                   case 0:
                     context.go('/trainings');
-                    // context.goNamed('feed'); to navigate by name
                     break;
                   case 1:
                     context.go('/admin');
-                    // context.goNamed('feed'); to navigate by name
                     break;
                   case 2:
                     context.go('/create_training');
@@ -168,12 +166,6 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const LoginExample(),
-    ),
-    GoRoute(
-      path: '/navrail',
-      builder: (context, state) => const ScaffoldWithNavbar(
-        CreateTraining(),
-      ),
     ),
   ],
 );
