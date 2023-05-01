@@ -1,144 +1,179 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:web_application/screens/Trainings/create_training_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:web_application/login_screen.dart';
 import 'package:web_application/screens/Trainings/admin_home_screen.dart';
+import 'package:web_application/screens/Trainings/create_training_screen.dart';
 import 'package:web_application/screens/Trainings/trainings_home_screen.dart';
-import 'firebase_options.dart';
-import 'login_screen.dart';
 
-class ExampleDestination {
-  const ExampleDestination(this.label, this.icon, this.selectedIcon);
-
-  final String label;
-  final Widget icon;
-  final Widget selectedIcon;
+void main() {
+  runApp(const MyApp());
 }
 
-const List<ExampleDestination>? destinations = <ExampleDestination>[
-  ExampleDestination(
-      'Trainingen', Icon(Icons.school_outlined), Icon(Icons.school)),
-  ExampleDestination(
-      'Beheer', Icon(Icons.text_snippet_outlined), Icon(Icons.text_snippet)),
-  ExampleDestination(
-      'page 3', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)),
-  1 == 2
-      ? ExampleDestination(
-          'GOED', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity))
-      : ExampleDestination(
-          'FOUT', Icon(Icons.invert_colors_on_outlined), Icon(Icons.opacity)),
-];
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-void main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(
-    MaterialApp(
-      title: 'NavigationDrawer Example',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true, primarySwatch: Colors.blue),
-      home: const NavigationDrawerExample(),
-    ),
-  );
-}
-
-class NavigationDrawerExample extends StatefulWidget {
-  const NavigationDrawerExample({super.key});
-
-  @override
-  State<NavigationDrawerExample> createState() =>
-      _NavigationDrawerExampleState();
-}
-
-class _NavigationDrawerExampleState extends State<NavigationDrawerExample> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-  int screenIndex = 1;
-  late bool showNavigationDrawer;
-  final List<Widget> screens = [
-    Trainings(),
-    const BeheerScreen(),
-    const CreateTraining(),
-    const LoginExample(),
-  ];
-
-  void handleScreenChanged(int selectedScreen) {
-    setState(() {
-      print(selectedScreen);
-      screenIndex = selectedScreen;
-    });
-  }
-
-  void openDrawer() {
-    scaffoldKey.currentState!.openDrawer();
-  }
-
-  Widget buildBottomBarScaffold() {
-    return Scaffold(
-      body: screens[screenIndex],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: screenIndex,
-        onDestinationSelected: (screenIndex) =>
-            setState(() => this.screenIndex = screenIndex),
-        destinations: destinations!.map((ExampleDestination destination) {
-          return NavigationDestination(
-            label: destination.label,
-            icon: destination.icon,
-            selectedIcon: destination.selectedIcon,
-            tooltip: destination.label,
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget buildDrawerScaffold(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      body: screens[screenIndex],
-      drawer: NavigationDrawer(
-        onDestinationSelected: handleScreenChanged,
-        selectedIndex: screenIndex,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-            child: Text(
-              'Navigatie',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          ),
-          ...destinations!.map((ExampleDestination destination) {
-            return NavigationDrawerDestination(
-              label: Text(destination.label),
-              icon: destination.icon,
-              selectedIcon: destination.selectedIcon,
-            );
-          }),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
-            child: Divider(),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: openDrawer,
-        label: const Text('Menu'),
-        icon: const Icon(Icons.info_outline),
-        backgroundColor: Colors.pink,
-      ),
-    );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    showNavigationDrawer = MediaQuery.of(context).size.width >= 450;
-  }
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return showNavigationDrawer
-        ? buildDrawerScaffold(context)
-        : buildBottomBarScaffold();
+    return MaterialApp.router(
+      title: 'Platform',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      routerConfig: _router,
+    );
   }
 }
+
+class ScaffoldWithNavbar extends StatelessWidget {
+  const ScaffoldWithNavbar(this.child, {super.key});
+  final Widget child; // Get “child” since it'll be given based on route path
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(52.0)),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                    color: Color(0xFF71C6D1),
+                    offset: const Offset(0.0, 0.0),
+                    blurRadius: 52.0),
+              ],
+            ),
+            child: NavigationRail(
+              backgroundColor: Color(0xFF71C6D1),
+              onDestinationSelected: (value) {
+                switch (value) {
+                  case 0:
+                    context.go('/trainings');
+                    // context.goNamed('feed'); to navigate by name
+                    break;
+                  case 1:
+                    context.go('/admin');
+                    // context.goNamed('feed'); to navigate by name
+                    break;
+                  case 2:
+                    context.go('/create_training');
+                }
+              },
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(
+                    Icons.school,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'Trainings',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(
+                    Icons.text_snippet,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'Admin',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(
+                    Icons.opacity,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+              selectedIndex: _calculateSelectedIndex(context),
+            ),
+          ),
+          Expanded(
+            child: child,
+          )
+        ],
+      ),
+    );
+  }
+
+  int _calculateSelectedIndex(BuildContext context) {
+    final String location = GoRouterState.of(context).location;
+    if (location.startsWith('/trainings')) {
+      return 0;
+    }
+    if (location.startsWith('/admin')) {
+      return 1;
+    }
+    if (location.startsWith('/create_training')) {
+      return 2;
+    }
+    return 0;
+  }
+}
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _shellNavigatorKey = GlobalKey<NavigatorState>();
+final GoRouter _router = GoRouter(
+  initialLocation: '/trainings',
+  routes: [
+    ShellRoute(
+      builder: (context, state, child) {
+        return ScaffoldWithNavbar(child);
+      },
+      routes: <RouteBase>[
+        GoRoute(
+            path: '/trainings',
+            pageBuilder: (context, state) => NoTransitionPage<void>(
+                  key: state.pageKey,
+                  child: const Trainings(),
+                ),
+            routes: [
+              GoRoute(
+                path: 'create_training',
+                pageBuilder: (context, state) => NoTransitionPage<void>(
+                  key: state.pageKey,
+                  child: const CreateTraining(),
+                ),
+              ),
+            ]),
+        GoRoute(
+          path: '/login',
+          pageBuilder: (context, state) => NoTransitionPage<void>(
+            key: state.pageKey,
+            child: const LoginExample(),
+          ),
+        ),
+        GoRoute(
+          path: '/admin',
+          pageBuilder: (context, state) => NoTransitionPage<void>(
+            key: state.pageKey,
+            child: const BeheerScreen(),
+          ),
+        ),
+        GoRoute(
+          path: '/create_training',
+          pageBuilder: (context, state) => NoTransitionPage<void>(
+            key: state.pageKey,
+            child: const CreateTraining(),
+          ),
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const LoginExample(),
+    ),
+    GoRoute(
+      path: '/navrail',
+      builder: (context, state) => const ScaffoldWithNavbar(
+        CreateTraining(),
+      ),
+    ),
+  ],
+);
