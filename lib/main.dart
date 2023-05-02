@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_application/login_screen.dart';
@@ -5,7 +6,12 @@ import 'package:web_application/screens/Trainings/admin_home_screen.dart';
 import 'package:web_application/screens/Trainings/create_training_screen.dart';
 import 'package:web_application/screens/Trainings/trainings_home_screen.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

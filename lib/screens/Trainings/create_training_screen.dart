@@ -18,18 +18,18 @@ class _CreateTrainingState extends State<CreateTraining> {
   final _descController = TextEditingController();
   final _goalsController = TextEditingController();
 
-  void createTraining(String trainingName, String trainingDesc, String trainingGoals) async {
-
-  }
+  void createTraining(
+      String trainingName, String trainingDesc, String trainingGoals) async {}
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       // Save user's name in Firestore
-    var trainingService = TrainingService(
-      TrainingDatasource(firebaseApp: Firebase.app()),
-    );
+      var trainingService = TrainingService(
+        TrainingDatasource(firebaseApp: Firebase.app()),
+      );
 
-    await trainingService.createTraining(_nameController.text, _descController.text, _goalsController.text);
+      await trainingService.createTraining(
+          _nameController.text, _descController.text, _goalsController.text);
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -126,8 +126,7 @@ class _CreateTrainingState extends State<CreateTraining> {
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       labelText: 'Training goals',
-                                      hintText:
-                                          'Voer een goal in',
+                                      hintText: 'Voer een goal in',
                                       filled: true,
                                     ),
                                     validator: (value) {

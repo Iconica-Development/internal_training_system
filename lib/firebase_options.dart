@@ -21,7 +21,10 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for ios - '
@@ -58,14 +61,5 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://iconica-training-system-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'iconica-training-system.appspot.com',
     measurementId: 'G-DVHT43C7G1',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDz9I4pdPszLYkA1V5ArtN3UkMDb3fqLUk',
-    appId: '1:414335552159:android:19dd5f41e0a0bbd3b070aa',
-    messagingSenderId: '414335552159',
-    projectId: 'iconica-training-system',
-    databaseURL: 'https://iconica-training-system-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'iconica-training-system.appspot.com',
   );
 }

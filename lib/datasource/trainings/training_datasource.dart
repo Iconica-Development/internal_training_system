@@ -24,13 +24,14 @@ class TrainingDatasource {
 
   Future<void> createTraining(TrainingDataModel trainingDataModel) async {
     //Check if training already exists
-      // var trainingSnapshot = await _trainingCollection.doc(trainingDataModel.id).get();
-      // if (trainingSnapshot.exists) {
-      //   print('This training already exist'); 
-      // }
+    // var trainingSnapshot =
+    //     await _trainingCollection.doc(trainingDataModel.id).get();
+    // if (trainingSnapshot.exists) {
+    //   print('This training already exist');
+    // }
 
     //   //Insert training into database
-      _trainingCollection.doc().set(trainingDataModel);
+    _trainingCollection.doc().set(trainingDataModel);
   }
 
   // Future<TrainingDataModel> getAllInfoForTraining(String trainingId) async {
