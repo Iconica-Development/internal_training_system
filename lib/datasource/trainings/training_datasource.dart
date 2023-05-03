@@ -31,6 +31,7 @@ class TrainingDatasource {
     // }
 
     //   //Insert training into database
+    print(trainingDataModel.trainingGoals);
     _trainingCollection.doc().set(trainingDataModel);
   }
 

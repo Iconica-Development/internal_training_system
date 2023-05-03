@@ -1,7 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:web_application/datasource/trainings/training_datasource.dart';
 import 'package:web_application/services/training_service.dart';
 
@@ -16,20 +20,22 @@ class _CreateTrainingState extends State<CreateTraining> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descController = TextEditingController();
-  final _goalsController = TextEditingController();
+  final TextEditingController _goalsController = TextEditingController();
+  List<String> downloadUrls = [];
 
   void createTraining(
       String trainingName, String trainingDesc, String trainingGoals) async {}
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // Save user's name in Firestore
       var trainingService = TrainingService(
         TrainingDatasource(firebaseApp: Firebase.app()),
       );
 
+      await uploadFiles(); // wait for files to upload
+      print('Downlaod URLS: $downloadUrls');
       await trainingService.createTraining(
-          _nameController.text, _descController.text, _goalsController.text);
+          _nameController.text, _descController.text, _items, downloadUrls);
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -38,6 +44,44 @@ class _CreateTrainingState extends State<CreateTraining> {
         ),
       );
     }
+  }
+
+// Upload files to Cloud Firestore
+  Future<void> uploadFiles() async {
+    print('BEGIN UPLOAD FUNCTION');
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
+
+    if (result != null) {
+      for (final file in result.files) {
+        Uint8List? fileBytes = file.bytes;
+        String fileName = file.name;
+        print('UPLOAD FILE TO CLOUD FIRESTORE');
+
+        TaskSnapshot snapshot = await FirebaseStorage.instance
+            .ref('uploads/$fileName')
+            .putData(fileBytes!);
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+        downloadUrls.add(downloadUrl);
+
+        print('Download URL for $fileName: $downloadUrl');
+      }
+    }
+  }
+
+  //Pick files using FilePicker
+  List<FilePickerResult?> files = [];
+  Future<void> pickAndAddFile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
+    files.add(result);
+  }
+
+  final List<String> _items = [];
+  void _addGoal(String value) {
+    setState(() {
+      _items.add(value);
+    });
   }
 
   @override
@@ -121,24 +165,33 @@ class _CreateTrainingState extends State<CreateTraining> {
                                       },
                                     ),
                                   ),
-                                  TextFormField(
+                                  TextField(
                                     controller: _goalsController,
                                     decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      labelText: 'Training goals',
-                                      hintText: 'Voer een goal in',
-                                      filled: true,
+                                      hintText: 'Enter a new item',
                                     ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter goal';
-                                      }
-                                      return null;
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      _addGoal(_goalsController.text);
+                                      _goalsController.clear();
                                     },
+                                    child: Text('Voeg goal toe'),
+                                  ),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: _items.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return ListTile(
+                                          title: Text(_items[index]),
+                                        );
+                                      },
+                                    ),
                                   ),
                                   const SizedBox(height: 15),
                                   OutlinedButton(
-                                    onPressed: () {},
+                                    onPressed: pickAndAddFile,
                                     child: const Text('Voeg bestanden toe'),
                                   ),
                                   const SizedBox(height: 15),
