@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:web_application/datasource/trainings/training_datasource.dart';
@@ -23,8 +24,8 @@ class _CreateTrainingState extends State<CreateTraining> {
   final TextEditingController _goalsController = TextEditingController();
   List<String> downloadUrls = [];
 
-  void createTraining(
-      String trainingName, String trainingDesc, String trainingGoals) async {}
+  // void createTraining(
+  //     String trainingName, String trainingDesc, String trainingGoals) async {}
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -36,6 +37,8 @@ class _CreateTrainingState extends State<CreateTraining> {
       print('Downlaod URLS: $downloadUrls');
       await trainingService.createTraining(
           _nameController.text, _descController.text, _items, downloadUrls);
+
+      context.go('/admin');
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
