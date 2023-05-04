@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:go_router/go_router.dart';
+import 'package:http/http.dart';
+import 'package:web_application/screens/Trainings/trainings_home_screen.dart';
 
 final loginOptions = LoginOptions(
   emailDecoration: const InputDecoration(
@@ -51,7 +54,8 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: EmailPasswordLoginForm(
         options: loginOptions,
-        onLogin: (email, password) => print('$email:$password'),
+        onLogin: (email, password) async =>
+            handleLogin(email, password, context),
         onRegister: (email, password) => print('Register!'),
         // onForgotPassword: (email) {
         //   Navigator.of(context).push(
@@ -66,6 +70,44 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+
+Future<void> handleLogin(
+  String email,
+  String password,
+  BuildContext context,
+) async {
+  //Login is correct
+  // var urlPrefix = 'https://a84a-185-10-158-5.ngrok.io';
+  // var url = Uri.parse('$urlPrefix/login');
+  // var headers = {'Content-type': 'application/json'};
+  // var json = '{"username": "$email", "password": "$password"}';
+  // var response = await post(url, headers: headers, body: json);
+
+  // if (response.statusCode == 200) {
+  //   await _setCustomer(response);
+
+  //   if (context.mounted) {
+  //     await Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => const Trainings(),
+  //       ),
+  //     );
+  //   }
+  // } else {
+  //   print(response.body);
+  //   print(response.statusCode);
+  // }
+}
+
+// Future<void> _setCustomer(Response response) async {
+//   Map<String, dynamic> loginData = jsonDecode(response.body);
+//   var customerService = CustomerService();
+//   await customerService.setCustomer(loginData['user']);
+// }
+
+
+
 
 // class ForgotPasswordScreen extends StatelessWidget {
 //   const ForgotPasswordScreen({super.key});
