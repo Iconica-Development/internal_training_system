@@ -1,14 +1,22 @@
 class UserDataModel {
   final String? id;
-  final String userName;
+  final String firstName;
+  final String lastName;
+  final String userEmail;
   final String userPassword;
 
   UserDataModel(
-      {required this.id, required this.userName, required this.userPassword});
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.userEmail,
+      required this.userPassword});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'userName': userName,
+      'firstName': firstName,
+      'lastName': lastName,
+      'userEmail': userEmail,
       'userPassword': userPassword,
     };
   }
@@ -16,7 +24,9 @@ class UserDataModel {
   factory UserDataModel.fromMap(String id, Map<String, dynamic> map) {
     return UserDataModel(
       id: id,
-      userName: map['userName'] as String,
+      firstName: map['firstName'] as String,
+      lastName: map['lastName'] as String,
+      userEmail: map['userEmail'] as String,
       userPassword: map['userPassword'] as String,
     );
   }
