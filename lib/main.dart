@@ -186,7 +186,7 @@ final GoRouter _router = GoRouter(
           path: '/create_training',
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
-            child: const LogoutScreen(),
+            child: const CreateTraining(),
           ),
         ),
         GoRoute(

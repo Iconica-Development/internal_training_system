@@ -23,7 +23,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Navigating to /admin...'),
+      child: Text('Navigating to Login Screen...'),
     );
   }
 }

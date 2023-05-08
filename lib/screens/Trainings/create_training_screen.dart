@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:web_application/datasource/trainings/training_datasource.dart';
 import 'package:web_application/services/training_service.dart';
+
+import '../login_screen.dart';
 
 class CreateTraining extends StatefulWidget {
   const CreateTraining({super.key});
@@ -89,6 +92,10 @@ class _CreateTrainingState extends State<CreateTraining> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return LoginExample();
+    }
     return Scaffold(
       body: Stack(
         children: [
