@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:web_application/screens/login_screen.dart';
 
 class Trainings extends StatefulWidget {
   const Trainings({super.key});
@@ -26,6 +28,10 @@ class _TrainingsState extends State<Trainings> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return LoginExample();
+    }
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

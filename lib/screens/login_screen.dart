@@ -1,8 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart';
-import 'package:web_application/screens/Trainings/trainings_home_screen.dart';
 
 final loginOptions = LoginOptions(
   emailDecoration: const InputDecoration(
@@ -56,74 +55,54 @@ class LoginScreen extends StatelessWidget {
         options: loginOptions,
         onLogin: (email, password) async =>
             handleLogin(email, password, context),
-        onRegister: (email, password) => print('Register!'),
-        // onForgotPassword: (email) {
-        //   Navigator.of(context).push(
-        //     MaterialPageRoute(
-        //       builder: (context) {
-        //         return const ForgotPasswordScreen();
-        //       },
-        //     ),
-        //   );
-        // },
       ),
     );
   }
 }
 
-Future<void> handleLogin(
-  String email,
-  String password,
-  BuildContext context,
-) async {
-  //Login is correct
-  // var urlPrefix = 'https://a84a-185-10-158-5.ngrok.io';
-  // var url = Uri.parse('$urlPrefix/login');
-  // var headers = {'Content-type': 'application/json'};
-  // var json = '{"username": "$email", "password": "$password"}';
-  // var response = await post(url, headers: headers, body: json);
+Future<void> checkUserState() async {
+  print('TEST');
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
+}
 
-  // if (response.statusCode == 200) {
-  //   await _setCustomer(response);
+Future<UserCredential?> handleLogin(
+    String email, String password, BuildContext context) async {
+  try {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    print('CORRECT.');
+    checkUserState();
+    context.go('/admin');
 
-  //   if (context.mounted) {
-  //     await Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => const Trainings(),
-  //       ),
-  //     );
-  //   }
-  // } else {
-  //   print(response.body);
-  //   print(response.statusCode);
-  // }
+    return userCredential;
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Er betsaat geen gebruiker met deze email.'),
+        ),
+      );
+    } else if (e.code == 'wrong-password') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Het wachtwoord voor deze gebruiker is incorrect.'),
+        ),
+      );
+    }
+  }
 }
 
 // Future<void> _setCustomer(Response response) async {
 //   Map<String, dynamic> loginData = jsonDecode(response.body);
 //   var customerService = CustomerService();
 //   await customerService.setCustomer(loginData['user']);
-// }
-
-
-
-
-// class ForgotPasswordScreen extends StatelessWidget {
-//   const ForgotPasswordScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: ForgotPasswordForm(
-//         options: loginOptions,
-//         title: const Text('Forgot password'),
-//         description: const Text('Hello world'),
-//         onRequestForgotPassword: (email) {
-//           print('Forgot password email sent to $email');
-//         },
-//       ),
-//     );
-//   }
 // }

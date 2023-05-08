@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:web_application/datasource/user_datasource.dart';
 import 'package:web_application/services/user_service.dart';
 
+import 'login_screen.dart';
+
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
 
@@ -76,6 +78,12 @@ class _CreateUserState extends State<CreateUser> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // Redirect the user to the login page
+      return LoginExample();
+    }
+
     return Scaffold(
       body: Stack(
         children: [

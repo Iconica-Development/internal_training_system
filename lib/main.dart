@@ -6,6 +6,7 @@ import 'package:web_application/screens/login_screen.dart';
 import 'package:web_application/screens/Trainings/admin_home_screen.dart';
 import 'package:web_application/screens/Trainings/create_training_screen.dart';
 import 'package:web_application/screens/Trainings/trainings_home_screen.dart';
+import 'package:web_application/screens/logout_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -62,6 +63,9 @@ class ScaffoldWithNavbar extends StatelessWidget {
                     break;
                   case 2:
                     context.go('/create_training');
+                    break;
+                  case 3:
+                    context.go('/logout');
                 }
               },
               destinations: const [
@@ -125,7 +129,7 @@ class ScaffoldWithNavbar extends StatelessWidget {
     if (location.startsWith('/admin')) {
       return 1;
     }
-    if (location.startsWith('/create_training')) {
+    if (location.startsWith('/logout')) {
       return 2;
     }
     return 0;
@@ -158,6 +162,13 @@ final GoRouter _router = GoRouter(
               ),
             ]),
         GoRoute(
+          path: '/logout',
+          pageBuilder: (context, state) => NoTransitionPage<void>(
+            key: state.pageKey,
+            child: const LogoutScreen(),
+          ),
+        ),
+        GoRoute(
           path: '/login',
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
@@ -175,7 +186,7 @@ final GoRouter _router = GoRouter(
           path: '/create_training',
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
-            child: const CreateTraining(),
+            child: const LogoutScreen(),
           ),
         ),
         GoRoute(

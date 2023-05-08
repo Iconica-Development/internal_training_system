@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:web_application/screens/Trainings/create_training_screen.dart';
+
+import '../login_screen.dart';
 
 class BeheerScreen extends StatefulWidget {
   const BeheerScreen({super.key});
@@ -26,6 +29,12 @@ class _BeheerScreenState extends State<BeheerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // Redirect the user to the login page
+      return LoginExample();
+    }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
