@@ -16,7 +16,7 @@ class BeheerScreen extends StatefulWidget {
 class _BeheerScreenState extends State<BeheerScreen> {
   final List<List<List<String>>> gridTitles = [
     [
-      ['Training inplannen', '/login'],
+      ['Training inplannen', '/plan_training'],
       ['Training aanmaken', '/login'],
       ['Training aanpassen', '/login'],
       ['Item 4', 'LINK'],
