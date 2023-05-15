@@ -1,4 +1,5 @@
 import 'package:web_application/services/training_data_model.dart';
+import 'package:web_application/services/training_planning_data_model.dart';
 
 import '../datasource/trainings/training_datasource.dart';
 
@@ -17,5 +18,21 @@ class TrainingService {
         sourceURLs: sourceURLs);
 
     _datasource.createTraining(trainingDataModel);
+  }
+
+  Future<void> createTrainingPlanning(
+    String trainingName,
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    TrainingPlanningDataModel trainingPlanningDataModel =
+        TrainingPlanningDataModel(
+      id: '',
+      trainingName: trainingName,
+      startDate: startDate,
+      endDate: endDate,
+    );
+
+    _datasource.createTrainingPlanning(trainingPlanningDataModel);
   }
 }

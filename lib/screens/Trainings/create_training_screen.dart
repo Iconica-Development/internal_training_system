@@ -27,9 +27,6 @@ class _CreateTrainingState extends State<CreateTraining> {
   final TextEditingController _goalsController = TextEditingController();
   List<String> downloadUrls = [];
 
-  // void createTraining(
-  //     String trainingName, String trainingDesc, String trainingGoals) async {}
-
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       var trainingService = TrainingService(

@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -18,16 +17,13 @@ class PlanTraining extends StatefulWidget {
   State<PlanTraining> createState() => _PlanTrainingState();
 }
 
-List<String> list = <String>['One', 'Two', 'Three', 'Four'];
+// List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
 class _PlanTrainingState extends State<PlanTraining> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _descController = TextEditingController();
-  final TextEditingController _goalsController = TextEditingController();
-  List<String> downloadUrls = [];
-  DateTime startDate = DateTime(2023, 10, 10);
-  DateTime endDate = DateTime(2023, 10, 10);
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -35,9 +31,8 @@ class _PlanTrainingState extends State<PlanTraining> {
         TrainingDatasource(firebaseApp: Firebase.app()),
       );
 
-      print('Downlaod URLS: $downloadUrls');
-      await trainingService.createTraining(
-          _nameController.text, _descController.text, _items, downloadUrls);
+      await trainingService.createTrainingPlanning(
+          _nameController.text, startDate, endDate);
 
       context.go('/admin');
 
@@ -48,21 +43,6 @@ class _PlanTrainingState extends State<PlanTraining> {
         ),
       );
     }
-  }
-
-  //Pick files using FilePicker
-  List<FilePickerResult?> files = [];
-  Future<void> pickAndAddFile() async {
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(allowMultiple: true);
-    files.add(result);
-  }
-
-  final List<String> _items = [];
-  void _addGoal(String value) {
-    setState(() {
-      _items.add(value);
-    });
   }
 
   @override
@@ -131,17 +111,17 @@ class _PlanTrainingState extends State<PlanTraining> {
                                       },
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(18.0),
-                                    child: Text(
-                                      'Training kiezen',
-                                      style: GoogleFonts.roboto(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 14,
-                                          textStyle: const TextStyle(
-                                              color: Colors.white)),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(18.0),
+                                  //   child: Text(
+                                  //     'Training kiezen',
+                                  //     style: GoogleFonts.roboto(
+                                  //         fontWeight: FontWeight.w700,
+                                  //         fontSize: 14,
+                                  //         textStyle: const TextStyle(
+                                  //             color: Colors.white)),
+                                  //   ),
+                                  // ),
                                   ElevatedButton(
                                       onPressed: () async {
                                         DateTime? newDate =
@@ -174,23 +154,12 @@ class _PlanTrainingState extends State<PlanTraining> {
                                         if (newDate == null) return;
 
                                         setState(() {
-                                          startDate = newDate;
+                                          endDate = newDate;
                                         });
                                       },
                                       child: Text('Selecteer eind datum')),
                                   Text(
                                       'Eind datum: ${endDate.day}-${endDate.month}-${endDate.year}'),
-                                  Expanded(
-                                    child: ListView.builder(
-                                      itemCount: _items.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return ListTile(
-                                          title: Text(_items[index]),
-                                        );
-                                      },
-                                    ),
-                                  ),
                                   const SizedBox(height: 15),
                                   FilledButton(
                                     onPressed: _submitForm,
