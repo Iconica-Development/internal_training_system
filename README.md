@@ -1,16 +1,27 @@
-# web_application
+# Iconica Internal Training System
 
-A new Flutter project.
+Iconica Internal Training System provides a system for handling trainings and the administration that comes with it.
+
+## Table of Contents
+
+- [About](#about)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+
+## About
+
+This system provides Iconcia employees with several functionalities.
+For students there is a way to apply to trainings. 
+For trainers there is a way to create and plan new trainings.
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+- Clone the repo from GitHub
+- Setup Firebase in the project
+- Setup Firebase emulator
 
-A few resources to get you started if this is your first Flutter project:
+## Usage
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+At this moment the system usage is mainly for internal use. Accounts can only created by a admin internally.
+In the future registration for outsiders will be available.
