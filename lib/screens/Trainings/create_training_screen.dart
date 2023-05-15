@@ -200,7 +200,7 @@ class _CreateTrainingState extends State<CreateTraining> {
                                     ),
                                   ),
                                   const SizedBox(height: 15),
-                                  OutlinedButton(
+                                  FilledButton(
                                     onPressed: pickAndAddFile,
                                     child: const Text('Voeg bestanden toe'),
                                   ),
