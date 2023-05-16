@@ -17,7 +17,7 @@ class _BeheerScreenState extends State<BeheerScreen> {
   final List<List<List<String>>> gridTitles = [
     [
       ['Training inplannen', '/plan_training'],
-      ['Training aanmaken', '/login'],
+      ['Training aanmaken', '/create_training'],
       ['Training aanpassen', '/login'],
       ['Item 4', 'LINK'],
     ],
