@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:web_application/screens/Trainings/plan_training_screen.dart';
+import 'package:web_application/screens/Trainings/training_application_screen.dart';
 import 'package:web_application/screens/create_user_screen.dart';
 import 'package:web_application/screens/login_screen.dart';
 import 'package:web_application/screens/Trainings/admin_home_screen.dart';
@@ -202,6 +203,13 @@ final GoRouter _router = GoRouter(
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
             child: const CreateUser(),
+          ),
+        ),
+        GoRoute(
+          path: '/training_application',
+          pageBuilder: (context, state) => NoTransitionPage<void>(
+            key: state.pageKey,
+            child: const TrainingApplication(),
           ),
         ),
       ],

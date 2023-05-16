@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:web_application/screens/login_screen.dart';
@@ -13,7 +14,7 @@ class Trainings extends StatefulWidget {
 class _TrainingsState extends State<Trainings> {
   final List<List<List<String>>> gridTitles = [
     [
-      ['Firebase training', '10-10-2000', 'LINK'],
+      ['INSCHRIJVEN', '10-10-2000', '/training_application'],
       ['Firebase training', '10-10-2000', 'LINK'],
     ],
     [
@@ -78,7 +79,7 @@ class _TrainingsState extends State<Trainings> {
           ),
           itemCount: cards.length,
           itemBuilder: (BuildContext context, int gridIndex) {
-            return buildInkWellCard(cards[gridIndex][0], cards[gridIndex][1]);
+            return buildInkWellCard(cards[gridIndex][0], cards[gridIndex][1], cards[gridIndex][2]);
           },
         ),
         const SizedBox(height: 32),
@@ -96,7 +97,7 @@ class _TrainingsState extends State<Trainings> {
     );
   }
 
-  Widget buildInkWellCard(String title, String trainingDate) {
+  Widget buildInkWellCard(String title, String trainingDate, String link) {
     return Card(
       clipBehavior: Clip.hardEdge,
       color: Color(0xFFB8E2E8),
@@ -104,7 +105,7 @@ class _TrainingsState extends State<Trainings> {
         splashColor: Colors.blue.withAlpha(30),
         hoverColor: Color.fromARGB(255, 84, 149, 157),
         onTap: () {
-          debugPrint('s');
+          context.go(link);
         },
         child: SizedBox(
           width: 400,
