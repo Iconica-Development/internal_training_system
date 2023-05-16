@@ -175,7 +175,7 @@ class _CreateTrainingState extends State<CreateTraining> {
                                   TextField(
                                     controller: _goalsController,
                                     decoration: InputDecoration(
-                                      hintText: 'Enter a new item',
+                                      hintText: 'Voer een goal in',
                                     ),
                                   ),
                                   ElevatedButton(
