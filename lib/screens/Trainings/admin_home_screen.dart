@@ -101,8 +101,10 @@ class _BeheerScreenState extends State<BeheerScreen> {
   Widget buildInkWellCard(String title, String link) {
     return Card(
       clipBehavior: Clip.hardEdge,
+      color: Color(0xFFB8E2E8),
       child: InkWell(
         splashColor: Colors.blue.withAlpha(30),
+        hoverColor: Color.fromARGB(255, 84, 149, 157),
         onTap: () {
           context.go(link);
         },
