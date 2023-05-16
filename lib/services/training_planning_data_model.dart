@@ -1,11 +1,13 @@
 class TrainingPlanningDataModel {
   final String? id;
   final String trainingName;
+  final String trainerName;
   final DateTime startDate;
   final DateTime endDate;
   TrainingPlanningDataModel({
     required this.id,
     required this.trainingName,
+    required this.trainerName,
     required this.startDate,
     required this.endDate,
   });
@@ -13,6 +15,7 @@ class TrainingPlanningDataModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'trainingName': trainingName,
+      'trainerName': trainerName,
       'startDate': startDate,
       'endDate': endDate,
     };
@@ -23,6 +26,7 @@ class TrainingPlanningDataModel {
     return TrainingPlanningDataModel(
       id: id,
       trainingName: map['trainingName'] as String,
+      trainerName: map['trainerName'] as String,
       startDate: map['startDate'] as DateTime,
       endDate: map['endDate'] as DateTime,
     );

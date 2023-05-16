@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:web_application/screens/Trainings/plan_training_screen.dart';
 import 'package:web_application/services/training_planning_data_model.dart';
 
 import '../../services/training_data_model.dart';
@@ -42,11 +43,11 @@ class TrainingDatasource {
 
   Future<void> createTrainingPlanning(
       TrainingPlanningDataModel trainingPlanningDataModel) async {
-    // print(trainingDataModel.trainingGoals);
     _trainingPlanningCollection.doc().set(trainingPlanningDataModel);
   }
 
-  // Future<TrainingDataModel> getAllInfoForTraining(String trainingId) async {
-
-  // }
+  Future<List<TrainingDataModel>> getAllTrainingPlanningDocuments() async {
+    var trainings = await _trainingCollection.get();
+    return trainings.docs.map((e) => e.data()).toList();
+  }
 }

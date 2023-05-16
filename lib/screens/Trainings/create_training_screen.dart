@@ -35,6 +35,9 @@ class _CreateTrainingState extends State<CreateTraining> {
 
       await uploadFiles(); // wait for files to upload
       print('Downlaod URLS: $downloadUrls');
+      if (_goalsController.text.isEmpty) {
+        _goalsController.text = '';
+      }
       await trainingService.createTraining(
           _nameController.text, _descController.text, _items, downloadUrls);
 
@@ -51,7 +54,6 @@ class _CreateTrainingState extends State<CreateTraining> {
 
 // Upload files to Cloud Firestore
   Future<void> uploadFiles() async {
-    print('BEGIN UPLOAD FUNCTION');
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
 
@@ -59,7 +61,6 @@ class _CreateTrainingState extends State<CreateTraining> {
       for (final file in result.files) {
         Uint8List? fileBytes = file.bytes;
         String fileName = file.name;
-        print('UPLOAD FILE TO CLOUD FIRESTORE');
 
         TaskSnapshot snapshot = await FirebaseStorage.instance
             .ref('uploads/$fileName')
@@ -67,7 +68,6 @@ class _CreateTrainingState extends State<CreateTraining> {
         String downloadUrl = await snapshot.ref.getDownloadURL();
         downloadUrls.add(downloadUrl);
 
-        print('Download URL for $fileName: $downloadUrl');
       }
     }
   }

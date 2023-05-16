@@ -21,11 +21,21 @@ class TrainingDataModel {
   }
 
   factory TrainingDataModel.fromMap(String id, Map<String, dynamic> map) {
+    print(map['trainingGoals']);
     return TrainingDataModel(
-        id: id,
-        trainingName: map['trainingName'] as String,
-        trainingDesc: map['trainingDesc'] as String,
-        trainingGoals: map['trainingGoals'] as List<String>,
-        sourceURLs: map['sourceURLs'] as List<String>);
+      id: id,
+      trainingName: map['trainingName'] as String,
+      trainingDesc: map['trainingDesc'] as String,
+      trainingGoals: (map['trainingGoals'] as List<dynamic>).isNotEmpty
+          ? (map['trainingGoals'] as List<dynamic>)
+              .map((e) => e.toString())
+              .toList()
+          : [],
+      sourceURLs: (map['sourceURLs'] as List<dynamic>).isNotEmpty
+          ? (map['sourceURLs'] as List<dynamic>)
+              .map((e) => e.toString())
+              .toList()
+          : [],
+    );
   }
 }

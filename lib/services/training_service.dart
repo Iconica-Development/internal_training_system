@@ -22,6 +22,7 @@ class TrainingService {
 
   Future<void> createTrainingPlanning(
     String trainingName,
+    String trainerName,
     DateTime startDate,
     DateTime endDate,
   ) async {
@@ -29,10 +30,15 @@ class TrainingService {
         TrainingPlanningDataModel(
       id: '',
       trainingName: trainingName,
+      trainerName: trainerName,
       startDate: startDate,
       endDate: endDate,
     );
 
     _datasource.createTrainingPlanning(trainingPlanningDataModel);
+  }
+
+  Future<List<TrainingDataModel>> getAllTrainingsData() async {
+    return _datasource.getAllTrainingPlanningDocuments();
   }
 }

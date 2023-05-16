@@ -61,7 +61,6 @@ class LoginScreen extends StatelessWidget {
 }
 
 Future<void> checkUserState() async {
-  print('TEST');
   FirebaseAuth.instance.authStateChanges().listen((User? user) {
     if (user == null) {
       print('User is currently signed out!');
@@ -79,7 +78,6 @@ Future<UserCredential?> handleLogin(
       email: email,
       password: password,
     );
-    print('CORRECT.');
     checkUserState();
     context.go('/admin');
 
