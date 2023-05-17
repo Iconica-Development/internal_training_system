@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:web_application/screens/Trainings/plan_training_screen.dart';
+import 'package:web_application/services/training_application_data_model.dart';
 import 'package:web_application/services/training_planning_data_model.dart';
 
 import '../../services/training_data_model.dart';
@@ -36,6 +37,19 @@ class TrainingDatasource {
     },
   );
 
+  late final _trainingApplicationCollection =
+      FirebaseFirestore.instanceFor(app: firebaseApp)
+          .collection('training_application')
+          .withConverter(
+    fromFirestore: (snapshot, options) {
+      return TrainingApplicationDataModel.fromMap(
+          snapshot.id, snapshot.data()!);
+    },
+    toFirestore: (object, options) {
+      return object.toMap();
+    },
+  );
+
   Future<void> createTraining(TrainingDataModel trainingDataModel) async {
     print(trainingDataModel.trainingGoals);
     _trainingCollection.doc().set(trainingDataModel);
@@ -49,5 +63,11 @@ class TrainingDatasource {
   Future<List<TrainingDataModel>> getAllTrainingPlanningDocuments() async {
     var trainings = await _trainingCollection.get();
     return trainings.docs.map((e) => e.data()).toList();
+  }
+
+  Future<void> createTrainingApplication(
+      TrainingApplicationDataModel trainingApplicationDataModel) async {
+    // print(trainingApplicationDataModel.trainingGoals);
+    _trainingApplicationCollection.doc().set(trainingApplicationDataModel);
   }
 }

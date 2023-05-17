@@ -1,9 +1,6 @@
-import 'dart:typed_data';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,7 +30,9 @@ class _TrainingApplicationState extends State<TrainingApplication> {
         TrainingDatasource(firebaseApp: Firebase.app()),
       );
 
-      context.go('/admin');
+      trainingService.createTrainingApplication('planningId', 'userId');
+
+      context.go('/trainings');
 
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -91,48 +90,27 @@ class _TrainingApplicationState extends State<TrainingApplication> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: TextFormField(
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Training naam',
-                                        hintText:
-                                            'Voer een naam in voor de training',
-                                        filled: true,
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please enter a name';
-                                        }
-                                        return null;
-                                      },
-                                    ),
+                                  Text(
+                                    'TRAINING NAAM',
+                                    style: TextStyle(fontSize: 24),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: TextFormField(
-                                      controller: _descController,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Training omschrijving',
-                                        hintText:
-                                            'Voer een omschrijving in voor de training',
-                                        filled: true,
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please enter a desc';
-                                        }
-                                        return null;
-                                      },
-                                    ),
+                                  Text(
+                                    'TRAINING OMSCHRIJVING',
+                                    style: TextStyle(fontSize: 24),
+                                  ),
+                                  Text(
+                                    'TRAINER NAAM',
+                                    style: TextStyle(fontSize: 24),
+                                  ),
+                                  Text(
+                                    'TRAINING DATUM',
+                                    style: TextStyle(fontSize: 24),
                                   ),
                                   const SizedBox(height: 15),
                                   FilledButton(
                                     onPressed: _submitForm,
-                                    child: const Text('Training aanmaken'),
+                                    child:
+                                        const Text('Inschrijven voor training'),
                                   ),
                                 ]),
                           ),

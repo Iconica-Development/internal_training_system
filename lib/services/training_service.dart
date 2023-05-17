@@ -1,3 +1,4 @@
+import 'package:web_application/services/training_application_data_model.dart';
 import 'package:web_application/services/training_data_model.dart';
 import 'package:web_application/services/training_planning_data_model.dart';
 
@@ -40,5 +41,19 @@ class TrainingService {
 
   Future<List<TrainingDataModel>> getAllTrainingsData() async {
     return _datasource.getAllTrainingPlanningDocuments();
+  }
+
+  Future<void> createTrainingApplication(
+    String planningId,
+    String userId,
+  ) async {
+    TrainingApplicationDataModel trainingApplicationDataModel =
+        TrainingApplicationDataModel(
+      id: '',
+      planningId: planningId,
+      userId: userId,
+    );
+
+    _datasource.createTrainingApplication(trainingApplicationDataModel);
   }
 }

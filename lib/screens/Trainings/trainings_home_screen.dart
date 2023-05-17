@@ -1,8 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:web_application/screens/login_screen.dart';
+
+import '../../datasource/trainings/training_datasource.dart';
+import '../../services/training_service.dart';
 
 class Trainings extends StatefulWidget {
   const Trainings({super.key});
@@ -12,23 +17,35 @@ class Trainings extends StatefulWidget {
 }
 
 class _TrainingsState extends State<Trainings> {
-  final List<List<List<String>>> gridTitles = [
-    [
-      ['INSCHRIJVEN', '10-10-2000', '/training_application'],
-      ['Firebase training', '10-10-2000', 'LINK'],
-    ],
-    [
-      ['Firebase training', '10-10-2000', 'LINK'],
-      ['Firebase training', '10-10-2000', 'LINK'],
-    ],
-    [
-      ['Firebase training', '10-10-2000', 'LINK'],
-      ['Firebase training', '10-10-2000', 'LINK'],
-    ],
+  List<List<String>> upcomingTrainingsTiles = [
+    ['TEST training', '10-10-2000', 'LINK'],
+    ['TEST training', '10-10-2000', 'LINK'],
   ];
+
+  List<List<String>> myApplicaitonTiles = [
+    ['TEST training', '10-10-2000', 'LINK'],
+    ['TEST training', '10-10-2000', 'LINK'],
+  ];
+
+  List<List<String>> myFollowedTrainingsTiles = [
+    ['TEST training', '10-10-2000', 'LINK'],
+    ['TEST training', '10-10-2000', 'LINK'],
+    ['TEST training', '10-10-2000', 'LINK'],
+  ];
+
+  Future<void> getAllTrainings() async {
+    var trainingService = TrainingService(
+      TrainingDatasource(firebaseApp: Firebase.app()),
+    );
+
+    trainingService.getAllTrainingsData();
+    var trainings = await trainingService.getAllTrainingsData();
+    trainings.forEach((trainingData) {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    getAllTrainings();
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return LoginExample();
@@ -51,10 +68,10 @@ class _TrainingsState extends State<Trainings> {
                   ),
                 ),
               ),
-              buildGrid('Mijn inschrijvingen', gridTitles[0]),
-              const SizedBox(height: 16),
-              buildGrid('Aankomende trainingen', gridTitles[1]),
-              buildGrid('Trainingen die ik heb gevolgd', gridTitles[2]),
+              buildGrid('Mijn inschrijvingen', myApplicaitonTiles),
+              buildGrid('Aankomende trainingen', upcomingTrainingsTiles),
+              buildGrid(
+                  'Trainingen die ik heb gevolgd', myFollowedTrainingsTiles),
             ],
           ),
         ),
@@ -79,7 +96,8 @@ class _TrainingsState extends State<Trainings> {
           ),
           itemCount: cards.length,
           itemBuilder: (BuildContext context, int gridIndex) {
-            return buildInkWellCard(cards[gridIndex][0], cards[gridIndex][1], cards[gridIndex][2]);
+            return buildInkWellCard(
+                cards[gridIndex][0], cards[gridIndex][1], cards[gridIndex][2]);
           },
         ),
         const SizedBox(height: 32),
