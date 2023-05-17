@@ -43,6 +43,11 @@ class TrainingService {
     return _datasource.getAllTrainingPlanningDocuments();
   }
 
+  Future<List<TrainingPlanningDataModel>> getAllTrainingApplications(
+      String userId) async {
+    return _datasource.getAllTrainingApplications(userId);
+  }
+
   Future<void> createTrainingApplication(
     String planningId,
     String userId,

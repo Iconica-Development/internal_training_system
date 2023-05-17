@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -17,39 +18,59 @@ class Trainings extends StatefulWidget {
 }
 
 class _TrainingsState extends State<Trainings> {
-  List<List<String>> upcomingTrainingsTiles = [
-    ['TEST training', '10-10-2000', 'LINK'],
-    ['TEST training', '10-10-2000', 'LINK'],
-  ];
+  var user = FirebaseAuth.instance.currentUser!;
+  var trainingService = TrainingService(
+    TrainingDatasource(firebaseApp: Firebase.app()),
+  );
 
-  List<List<String>> myApplicaitonTiles = [
-    ['TEST training', '10-10-2000', 'LINK'],
-    ['TEST training', '10-10-2000', 'LINK'],
-  ];
-
+  List<List<String>> myApplicaitonTiles = [];
+  List<List<String>> upcomingTrainingsTiles = [];
   List<List<String>> myFollowedTrainingsTiles = [
     ['TEST training', '10-10-2000', 'LINK'],
     ['TEST training', '10-10-2000', 'LINK'],
     ['TEST training', '10-10-2000', 'LINK'],
   ];
 
-  Future<void> getAllTrainings() async {
-    var trainingService = TrainingService(
-      TrainingDatasource(firebaseApp: Firebase.app()),
-    );
+  Future<List<List<String>>> fillMyApplicationTiles() async {
+    print(user.email!);
+    var trainings =
+        await trainingService.getAllTrainingApplications(user.email!);
+    List<List<String>> trainingTiles = [];
+    trainings.forEach((trainingData) {
+      print(trainingData.startDate);
 
-    trainingService.getAllTrainingsData();
+      List<String> trainingTile = [
+        trainingData.trainingName,
+        trainingData.startDate.toString(),
+        trainingData.id.toString(),
+      ];
+      trainingTiles.add(trainingTile);
+    });
+
+    return trainingTiles;
+  }
+
+  Future<List<List<String>>> getAllTrainings() async {
     var trainings = await trainingService.getAllTrainingsData();
-    trainings.forEach((trainingData) {});
+    List<List<String>> trainingTiles = [];
+    trainings.forEach((trainingData) {
+      List<String> trainingTile = [
+        trainingData.trainingName,
+        trainingData.trainingName,
+        trainingData.id.toString(),
+      ];
+      trainingTiles.add(trainingTile);
+    });
+
+    return trainingTiles;
   }
 
   @override
   Widget build(BuildContext context) {
-    getAllTrainings();
-    User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return LoginExample();
     }
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -62,16 +83,49 @@ class _TrainingsState extends State<Trainings> {
                   child: Text(
                     'Trainingen',
                     style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 25,
-                        textStyle: const TextStyle(color: Colors.blue)),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 25,
+                      textStyle: const TextStyle(color: Colors.blue),
+                    ),
                   ),
                 ),
               ),
-              buildGrid('Mijn inschrijvingen', myApplicaitonTiles),
-              buildGrid('Aankomende trainingen', upcomingTrainingsTiles),
+              FutureBuilder<List<List<String>>>(
+                future: fillMyApplicationTiles(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    myApplicaitonTiles = snapshot.data ?? [];
+                    return buildGrid(
+                      'Mijn inschrijvingen',
+                      myApplicaitonTiles,
+                    );
+                  }
+                },
+              ),
+              FutureBuilder<List<List<String>>>(
+                future: getAllTrainings(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    upcomingTrainingsTiles = snapshot.data ?? [];
+                    return buildGrid(
+                      'Aankomende trainingen',
+                      upcomingTrainingsTiles,
+                    );
+                  }
+                },
+              ),
               buildGrid(
-                  'Trainingen die ik heb gevolgd', myFollowedTrainingsTiles),
+                'Trainingen die ik heb gevolgd',
+                myFollowedTrainingsTiles,
+              ),
             ],
           ),
         ),

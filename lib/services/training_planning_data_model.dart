@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TrainingPlanningDataModel {
   final String? id;
   final String trainingName;
@@ -27,8 +29,8 @@ class TrainingPlanningDataModel {
       id: id,
       trainingName: map['trainingName'] as String,
       trainerName: map['trainerName'] as String,
-      startDate: map['startDate'] as DateTime,
-      endDate: map['endDate'] as DateTime,
+      startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate'].millisecondsSinceEpoch),
+      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate'].millisecondsSinceEpoch),
     );
   }
 }

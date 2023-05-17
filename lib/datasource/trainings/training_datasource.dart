@@ -65,6 +65,29 @@ class TrainingDatasource {
     return trainings.docs.map((e) => e.data()).toList();
   }
 
+  Future<List<TrainingPlanningDataModel>> getAllTrainingApplications(
+      String userId) async {
+    List<dynamic> planningIds = [];
+
+    await _trainingApplicationCollection
+        .where('userId', isEqualTo: userId)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((DocumentSnapshot docSnapshot) {
+        dynamic fieldValue = docSnapshot.get('planningId');
+        planningIds.add(fieldValue);
+      });
+    }).catchError((error) {
+      print('Error: $error');
+    });
+
+    var plannedTrainings = await _trainingPlanningCollection
+        .where('planningId', whereIn: planningIds)
+        .get();
+
+    return plannedTrainings.docs.map((e) => e.data()).toList();
+  }
+
   Future<void> createTrainingApplication(
       TrainingApplicationDataModel trainingApplicationDataModel) async {
     // print(trainingApplicationDataModel.trainingGoals);
