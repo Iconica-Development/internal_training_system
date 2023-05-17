@@ -18,6 +18,7 @@ class TrainingApplication extends StatefulWidget {
 }
 
 class _TrainingApplicationState extends State<TrainingApplication> {
+  var user = FirebaseAuth.instance.currentUser!;
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descController = TextEditingController();
@@ -30,7 +31,7 @@ class _TrainingApplicationState extends State<TrainingApplication> {
         TrainingDatasource(firebaseApp: Firebase.app()),
       );
 
-      trainingService.createTrainingApplication('planningId', 'userId');
+      trainingService.createTrainingApplication('planningId', user.email!);
 
       context.go('/trainings');
 
@@ -45,7 +46,6 @@ class _TrainingApplicationState extends State<TrainingApplication> {
 
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return LoginExample();
     }

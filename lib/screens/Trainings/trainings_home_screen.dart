@@ -32,7 +32,6 @@ class _TrainingsState extends State<Trainings> {
   ];
 
   Future<List<List<String>>> fillMyApplicationTiles() async {
-    print(user.email!);
     var trainings =
         await trainingService.getAllTrainingApplications(user.email!);
     List<List<String>> trainingTiles = [];
@@ -50,13 +49,13 @@ class _TrainingsState extends State<Trainings> {
     return trainingTiles;
   }
 
-  Future<List<List<String>>> getAllTrainings() async {
+  Future<List<List<String>>> fillUpcomingTrainings() async {
     var trainings = await trainingService.getAllTrainingsData();
     List<List<String>> trainingTiles = [];
     trainings.forEach((trainingData) {
       List<String> trainingTile = [
         trainingData.trainingName,
-        trainingData.trainingName,
+        trainingData.startDate.toString(),
         trainingData.id.toString(),
       ];
       trainingTiles.add(trainingTile);
@@ -107,7 +106,7 @@ class _TrainingsState extends State<Trainings> {
                 },
               ),
               FutureBuilder<List<List<String>>>(
-                future: getAllTrainings(),
+                future: fillUpcomingTrainings(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CircularProgressIndicator();
