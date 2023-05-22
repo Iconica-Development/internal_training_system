@@ -26,9 +26,9 @@ class _TrainingsState extends State<Trainings> {
   List<List<String>> myApplicaitonTiles = [];
   List<List<String>> upcomingTrainingsTiles = [];
   List<List<String>> myFollowedTrainingsTiles = [
-    ['TEST training', '10-10-2000', '/training_application'],
-    ['TEST training', '10-10-2000', '/training_application'],
-    ['TEST training', '10-10-2000', '/training_application'],
+    ['TEST training', 'PLACEHOLDER', '/training_application'],
+    ['TEST training', 'PLACEHOLDER', '/training_application'],
+    ['TEST training', 'PLACEHOLDER', '/training_application'],
   ];
 
   Future<List<List<String>>> fillMyApplicationTiles() async {
@@ -36,7 +36,6 @@ class _TrainingsState extends State<Trainings> {
         await trainingService.getAllTrainingApplications(user.email!);
     List<List<String>> trainingTiles = [];
     trainings.forEach((trainingData) {
-
       List<String> trainingTile = [
         trainingData.trainingName,
         trainingData.startDate.toString(),
