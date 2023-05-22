@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TrainingPlanningDataModel {
-  final String? id;
+  final String id;
   final String trainingName;
   final String trainerName;
   final DateTime startDate;
@@ -29,8 +29,10 @@ class TrainingPlanningDataModel {
       id: id,
       trainingName: map['trainingName'] as String,
       trainerName: map['trainerName'] as String,
-      startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate'].millisecondsSinceEpoch),
-      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate'].millisecondsSinceEpoch),
+      startDate: DateTime.fromMillisecondsSinceEpoch(
+          map['startDate'].millisecondsSinceEpoch),
+      endDate: DateTime.fromMillisecondsSinceEpoch(
+          map['endDate'].millisecondsSinceEpoch),
     );
   }
 }

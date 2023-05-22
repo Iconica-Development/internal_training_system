@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:web_application/datasource/trainings/training_datasource.dart';
-import 'package:web_application/services/training_data_model.dart';
 import 'package:web_application/services/training_service.dart';
 
 import '../login_screen.dart';

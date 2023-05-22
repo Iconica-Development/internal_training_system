@@ -108,7 +108,8 @@ class _TrainingApplicationState extends State<TrainingApplication> {
                                   ),
                                   const SizedBox(height: 15),
                                   FilledButton(
-                                    onPressed: _submitForm,
+                                    onPressed: () =>
+                                        context.go('/trainingdetails'),
                                     child:
                                         const Text('Inschrijven voor training'),
                                   ),

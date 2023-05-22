@@ -26,9 +26,9 @@ class _TrainingsState extends State<Trainings> {
   List<List<String>> myApplicaitonTiles = [];
   List<List<String>> upcomingTrainingsTiles = [];
   List<List<String>> myFollowedTrainingsTiles = [
-    ['TEST training', '10-10-2000', 'LINK'],
-    ['TEST training', '10-10-2000', 'LINK'],
-    ['TEST training', '10-10-2000', 'LINK'],
+    ['TEST training', '10-10-2000', '/training_application'],
+    ['TEST training', '10-10-2000', '/training_application'],
+    ['TEST training', '10-10-2000', '/training_application'],
   ];
 
   Future<List<List<String>>> fillMyApplicationTiles() async {
@@ -36,7 +36,6 @@ class _TrainingsState extends State<Trainings> {
         await trainingService.getAllTrainingApplications(user.email!);
     List<List<String>> trainingTiles = [];
     trainings.forEach((trainingData) {
-      print(trainingData.startDate);
 
       List<String> trainingTile = [
         trainingData.trainingName,
@@ -168,7 +167,8 @@ class _TrainingsState extends State<Trainings> {
     );
   }
 
-  Widget buildInkWellCard(String title, String trainingDate, String link) {
+  Widget buildInkWellCard(
+      String title, String trainingDate, String trainingId) {
     return Card(
       clipBehavior: Clip.hardEdge,
       color: Color(0xFFB8E2E8),
@@ -176,7 +176,7 @@ class _TrainingsState extends State<Trainings> {
         splashColor: Colors.blue.withAlpha(30),
         hoverColor: Color.fromARGB(255, 84, 149, 157),
         onTap: () {
-          context.go(link);
+          context.go('/trainingdetails/' + trainingId);
         },
         child: SizedBox(
           width: 400,

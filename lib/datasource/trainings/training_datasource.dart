@@ -60,7 +60,8 @@ class TrainingDatasource {
     _trainingPlanningCollection.doc().set(trainingPlanningDataModel);
   }
 
-  Future<List<TrainingPlanningDataModel>> getAllTrainingPlanningDocuments() async {
+  Future<List<TrainingPlanningDataModel>>
+      getAllTrainingPlanningDocuments() async {
     var trainings = await _trainingPlanningCollection.get();
     return trainings.docs.map((e) => e.data()).toList();
   }
@@ -82,7 +83,7 @@ class TrainingDatasource {
     });
 
     var plannedTrainings = await _trainingPlanningCollection
-        .where('planningId', whereIn: planningIds)
+        .where(FieldPath.documentId, whereIn: planningIds)
         .get();
 
     return plannedTrainings.docs.map((e) => e.data()).toList();
@@ -90,7 +91,11 @@ class TrainingDatasource {
 
   Future<void> createTrainingApplication(
       TrainingApplicationDataModel trainingApplicationDataModel) async {
-    // print(trainingApplicationDataModel.trainingGoals);
     _trainingApplicationCollection.doc().set(trainingApplicationDataModel);
+  }
+
+  Future<TrainingPlanningDataModel?> getTrainingById(String trainingId) async {
+    var training = await _trainingPlanningCollection.doc(trainingId).get();
+    return training.data();
   }
 }

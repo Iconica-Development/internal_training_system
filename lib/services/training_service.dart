@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:web_application/services/training_application_data_model.dart';
 import 'package:web_application/services/training_data_model.dart';
 import 'package:web_application/services/training_planning_data_model.dart';
@@ -46,6 +47,11 @@ class TrainingService {
   Future<List<TrainingPlanningDataModel>> getAllTrainingApplications(
       String userId) async {
     return _datasource.getAllTrainingApplications(userId);
+  }
+
+  Future<TrainingPlanningDataModel?> getTrainingById(
+      String trainingId) async {
+    return _datasource.getTrainingById(trainingId);
   }
 
   Future<void> createTrainingApplication(
