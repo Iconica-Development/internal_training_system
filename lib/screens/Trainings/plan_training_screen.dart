@@ -147,7 +147,6 @@ class _PlanTrainingState extends State<PlanTraining> {
                                               color: Colors.deepPurpleAccent,
                                             ),
                                             onChanged: (String? value) {
-                                              // This is called when the user selects an item.
                                               setState(() {
                                                 trainingNameValue = value!;
                                               });

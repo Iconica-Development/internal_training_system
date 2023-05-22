@@ -52,19 +52,15 @@ class _TrainingDetailsState extends State<TrainingDetails> {
     // ...
     return FutureBuilder<TrainingPlanningDataModel?>(
         future:
-            getTrainingById(widget.id), // Pass the future to the FutureBuilder
+            getTrainingById(widget.id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            // While waiting for the data, show a loading indicator
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
-            // If an error occurred, show an error message
             return Text('Error: ${snapshot.error}');
           } else {
-            // Data has been successfully fetched
             final training = snapshot.data;
             if (training == null) {
-              // Handle the case when no training is found
               return Text('Training not found');
             }
             DateTime startDate = training.startDate;
