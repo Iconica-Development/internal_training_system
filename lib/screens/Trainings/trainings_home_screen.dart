@@ -23,7 +23,7 @@ class _TrainingsState extends State<Trainings> {
     TrainingDatasource(firebaseApp: Firebase.app()),
   );
 
-  List<List<String>> myApplicaitonTiles = [];
+  List<List<String>> myApplicationTiles = [];
   List<List<String>> upcomingTrainingsTiles = [];
   List<List<String>> myFollowedTrainingsTiles = [
     ['TEST training', 'PLACEHOLDER', '/training_application'],
@@ -95,10 +95,10 @@ class _TrainingsState extends State<Trainings> {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
-                    myApplicaitonTiles = snapshot.data ?? [];
+                    myApplicationTiles = snapshot.data ?? [];
                     return buildGrid(
                       'Mijn inschrijvingen',
-                      myApplicaitonTiles,
+                      myApplicationTiles,
                     );
                   }
                 },
