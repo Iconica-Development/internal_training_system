@@ -21,7 +21,7 @@ class _BeheerScreenState extends State<BeheerScreen> {
       ['Training inplannen', '/plan_training'],
       ['Training aanmaken', '/create_training'],
       ['Training aanpassen', '/login'],
-      ['Item 4', 'LINK'],
+      ['Maak gebruiker aan', '/create_user'],
     ],
     [
       ['Training aanpassen', 'LINK'],

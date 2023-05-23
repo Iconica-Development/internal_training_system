@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:web_application/services/flutter_rbac_users_data_model.dart';
 import 'package:web_application/services/user_data_model.dart';
 
 class UserDatasource {
@@ -20,7 +21,22 @@ class UserDatasource {
     },
   );
 
-  Future<void> createUser(UserDataModel userDataModel) async {
+  late final _userRbacColleciton =
+      FirebaseFirestore.instanceFor(app: firebaseApp)
+          .collection('flutter_rbac_users')
+          .withConverter(
+    fromFirestore: (snapshot, options) {
+      return FlutterRbacUsersDataModel.fromMap(snapshot.id, snapshot.data()!);
+    },
+    toFirestore: (object, options) {
+      return object.toMap();
+    },
+  );
+
+  Future<void> createUser(UserDataModel userDataModel,
+      FlutterRbacUsersDataModel rbacUsersDataModel) async {
     _userCollection.doc().set(userDataModel);
+
+    _userRbacColleciton.doc().set(rbacUsersDataModel);
   }
 }

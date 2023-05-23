@@ -1,4 +1,5 @@
 import 'package:web_application/datasource/user_datasource.dart';
+import 'package:web_application/services/flutter_rbac_users_data_model.dart';
 import 'package:web_application/services/user_data_model.dart';
 
 class UserService {
@@ -16,6 +17,13 @@ class UserService {
       userPassword: userPassword,
     );
 
-    _datasource.createUser(userDataModel);
+    FlutterRbacUsersDataModel flutterRbacUsersDataModel =
+        FlutterRbacUsersDataModel(
+      id: '',
+      permissions: [],
+      roles: [],
+    );
+
+    _datasource.createUser(userDataModel, flutterRbacUsersDataModel);
   }
 }
