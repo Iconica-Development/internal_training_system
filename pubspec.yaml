@@ -35,6 +35,15 @@ dependencies:
   flutter_login:
     git:
       url: https://github.com/Iconica-Development/flutter_login_widget.git
+  flutter_rbac_services:
+    git:
+      url: https://github.com/Iconica-Development/flutter_rbac_service.git
+      path: packages/flutter_rbac_services
+  flutter_rbac_services_firebase:
+    git:
+      url: https://github.com/Iconica-Development/flutter_rbac_service.git
+      path: packages/flutter_rbac_services_firebase
+
 
 
   # The following adds the Cupertino Icons font to your application.

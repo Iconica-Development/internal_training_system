@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rbac_services/flutter_rbac_services.dart';
+import 'package:flutter_rbac_services_firebase/flutter_rbac_services_firebase.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:web_application/screens/Trainings/create_training_screen.dart';
 
 import '../login_screen.dart';
 
@@ -27,13 +29,24 @@ class _BeheerScreenState extends State<BeheerScreen> {
     ],
   ];
 
+  Future<void> getUserPermission() async {
+    FirebaseApp firebaseApp = Firebase.app();
+    var firebaseDatasource = FirebaseRbacDatasource(firebaseApp: firebaseApp);
+    var rbacService = RbacService(firebaseDatasource);
+    bool hasPermission = await rbacService.hasRole(
+        '4bENHuYKplqyITx0sUk9', 'Iv7eRUhqS9zx5aibgGUd');
+    print(hasPermission);
+  }
+
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
+
     if (user == null) {
-      // Redirect the user to the login page
       return LoginExample();
     }
+
+    getUserPermission();
 
     return Scaffold(
       body: SingleChildScrollView(

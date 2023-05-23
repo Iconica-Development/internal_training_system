@@ -223,6 +223,33 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.13"
+  flutter_rbac_services:
+    dependency: "direct main"
+    description:
+      path: "packages/flutter_rbac_services"
+      ref: HEAD
+      resolved-ref: "0ff708c11c526b347e696f82b9f8da4e17f0d3b6"
+      url: "https://github.com/Iconica-Development/flutter_rbac_service.git"
+    source: git
+    version: "0.0.1"
+  flutter_rbac_services_data_interface:
+    dependency: transitive
+    description:
+      path: "packages/flutter_rbac_services_data_interface"
+      ref: HEAD
+      resolved-ref: "0ff708c11c526b347e696f82b9f8da4e17f0d3b6"
+      url: "https://github.com/Iconica-Development/flutter_rbac_service.git"
+    source: git
+    version: "0.0.1"
+  flutter_rbac_services_firebase:
+    dependency: "direct main"
+    description:
+      path: "packages/flutter_rbac_services_firebase"
+      ref: HEAD
+      resolved-ref: "0ff708c11c526b347e696f82b9f8da4e17f0d3b6"
+      url: "https://github.com/Iconica-Development/flutter_rbac_service.git"
+    source: git
+    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -511,5 +538,5 @@ packages:
     source: hosted
     version: "1.0.0"
 sdks:
-  dart: ">=2.19.5 <3.0.0"
+  dart: ">=2.19.6 <3.0.0"
   flutter: ">=3.7.0"
