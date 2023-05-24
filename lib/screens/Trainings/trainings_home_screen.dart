@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rbac_services/flutter_rbac_services.dart';
+import 'package:flutter_rbac_services_firebase/flutter_rbac_services_firebase.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,7 @@ import 'package:web_application/screens/login_screen.dart';
 
 import '../../datasource/trainings/training_datasource.dart';
 import '../../services/training_service.dart';
+import '../not_allowed_screen.dart';
 
 class Trainings extends StatefulWidget {
   const Trainings({super.key});
@@ -62,72 +65,98 @@ class _TrainingsState extends State<Trainings> {
     return trainingTiles;
   }
 
+  Future<bool> getUserPermission(String userId, String roleId) async {
+    FirebaseApp firebaseApp = Firebase.app();
+    var firebaseDatasource = FirebaseRbacDatasource(firebaseApp: firebaseApp);
+    var rbacService = RbacService(firebaseDatasource);
+    print('CURRENT USER ID: ' + userId);
+    bool hasPermission = await rbacService.hasRole(userId, roleId);
+    return hasPermission;
+  }
+
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return LoginExample();
     }
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Text(
-                    'Trainingen',
-                    style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 25,
-                      textStyle: const TextStyle(color: Colors.blue),
-                    ),
+    return FutureBuilder<bool>(
+        future: getUserPermission(user.uid, 'Iv7eRUhqS9zx5aibgGUd'),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            bool isAllowed = snapshot.data ?? false;
+            if (!isAllowed) {
+              return NotAllowedScreen();
+            }
+            return Scaffold(
+              body: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Text(
+                            'Trainingen',
+                            style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 25,
+                              textStyle: const TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                        ),
+                      ),
+                      FutureBuilder<List<List<String>>>(
+                        future: fillMyApplicationTiles(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            myApplicationTiles = snapshot.data ?? [];
+                            return buildGrid(
+                              'Mijn inschrijvingen',
+                              myApplicationTiles,
+                            );
+                          }
+                        },
+                      ),
+                      FutureBuilder<List<List<String>>>(
+                        future: fillUpcomingTrainings(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            upcomingTrainingsTiles = snapshot.data ?? [];
+                            return buildGrid(
+                              'Aankomende trainingen',
+                              upcomingTrainingsTiles,
+                            );
+                          }
+                        },
+                      ),
+                      buildGrid(
+                        'Trainingen die ik heb gevolgd',
+                        myFollowedTrainingsTiles,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              FutureBuilder<List<List<String>>>(
-                future: fillMyApplicationTiles(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    myApplicationTiles = snapshot.data ?? [];
-                    return buildGrid(
-                      'Mijn inschrijvingen',
-                      myApplicationTiles,
-                    );
-                  }
-                },
-              ),
-              FutureBuilder<List<List<String>>>(
-                future: fillUpcomingTrainings(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    upcomingTrainingsTiles = snapshot.data ?? [];
-                    return buildGrid(
-                      'Aankomende trainingen',
-                      upcomingTrainingsTiles,
-                    );
-                  }
-                },
-              ),
-              buildGrid(
-                'Trainingen die ik heb gevolgd',
-                myFollowedTrainingsTiles,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          }
+        });
   }
 
   Widget buildGrid(String rowName, List<List<String>> cards) {
