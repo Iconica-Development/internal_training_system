@@ -82,7 +82,7 @@ class _TrainingsState extends State<Trainings> {
     }
 
     return FutureBuilder<bool>(
-        future: getUserPermission(user.uid, 'Iv7eRUhqS9zx5aibgGUd'),
+        future: getUserPermission(user.uid, 'Iv7eRd8e49zx5aibgGUd'),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
