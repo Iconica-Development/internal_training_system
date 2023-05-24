@@ -9,6 +9,7 @@ import 'package:web_application/screens/Trainings/admin_home_screen.dart';
 import 'package:web_application/screens/Trainings/create_training_screen.dart';
 import 'package:web_application/screens/Trainings/trainings_home_screen.dart';
 import 'package:web_application/screens/logout_screen.dart';
+import 'package:web_application/screens/not_allowed_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -175,6 +176,13 @@ final GoRouter _router = GoRouter(
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
             child: const LoginExample(),
+          ),
+        ),
+        GoRoute(
+          path: '/not_allowed',
+          pageBuilder: (context, state) => NoTransitionPage<void>(
+            key: state.pageKey,
+            child: const NotAllowedScreen(),
           ),
         ),
         GoRoute(

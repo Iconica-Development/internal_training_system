@@ -5,6 +5,7 @@ import 'package:flutter_rbac_services/flutter_rbac_services.dart';
 import 'package:flutter_rbac_services_firebase/flutter_rbac_services_firebase.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:web_application/screens/not_allowed_screen.dart';
 
 import '../login_screen.dart';
 
@@ -29,52 +30,105 @@ class _BeheerScreenState extends State<BeheerScreen> {
     ],
   ];
 
-  Future<void> getUserPermission() async {
+  Future<bool> getUserPermission() async {
     FirebaseApp firebaseApp = Firebase.app();
     var firebaseDatasource = FirebaseRbacDatasource(firebaseApp: firebaseApp);
     var rbacService = RbacService(firebaseDatasource);
     bool hasPermission = await rbacService.hasRole(
         '4bENHuYKplqyITx0sUk9', 'Iv7eRUhqS9zx5aibgGUd');
-    print(hasPermission);
+    return hasPermission;
   }
 
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
 
-    if (user == null) {
-      return LoginExample();
-    }
-
-    getUserPermission();
-
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Text(
-                    'Beheer',
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 25,
-                        textStyle: const TextStyle(color: Color(0xFF71C6D1))),
-                  ),
+    return FutureBuilder<bool>(
+      future: getUserPermission(),
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          bool isAllowed = snapshot.data ?? false;
+          if (user == null) {
+            return LoginExample();
+          }
+          if (!isAllowed) {
+            print('PERSON HAS NO PERMISSION');
+            return NotAllowedScreen();
+          }
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          'Beheer',
+                          style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 25,
+                              textStyle:
+                                  const TextStyle(color: Color(0xFF71C6D1))),
+                        ),
+                      ),
+                    ),
+                    buildGrid('Training', gridTitles[0]),
+                    SizedBox(height: 16),
+                    buildGrid('Admin', gridTitles[1]),
+                  ],
                 ),
               ),
-              buildGrid('Training', gridTitles[0]),
-              SizedBox(height: 16),
-              buildGrid('Admin', gridTitles[1]),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        }
+      },
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //   bool test = getUserPermission();
+
+  //   if (1 == 1) {
+  //     return NotAllowedScreen();
+  //   }
+
+  //   if (user == null) {}
+
+  //   return Scaffold(
+  //     body: SingleChildScrollView(
+  //       child: Container(
+  //         padding: EdgeInsets.all(16),
+  //         child: Column(
+  //           children: [
+  //             Center(
+  //               child: Padding(
+  //                 padding: const EdgeInsets.all(18.0),
+  //                 child: Text(
+  //                   'Beheer',
+  //                   style: GoogleFonts.roboto(
+  //                       fontWeight: FontWeight.w700,
+  //                       fontSize: 25,
+  //                       textStyle: const TextStyle(color: Color(0xFF71C6D1))),
+  //                 ),
+  //               ),
+  //             ),
+  //             buildGrid('Training', gridTitles[0]),
+  //             SizedBox(height: 16),
+  //             buildGrid('Admin', gridTitles[1]),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget buildGrid(String rowName, List<List<String>> cards) {
     return Column(
