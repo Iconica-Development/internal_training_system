@@ -57,7 +57,6 @@ class _BeheerScreenState extends State<BeheerScreen> {
         } else {
           bool isAllowed = snapshot.data ?? false;
           if (!isAllowed) {
-            print('PERSON HAS NO PERMISSION');
             return NotAllowedScreen();
           }
           return Scaffold(
@@ -91,45 +90,6 @@ class _BeheerScreenState extends State<BeheerScreen> {
       },
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   bool test = getUserPermission();
-
-  //   if (1 == 1) {
-  //     return NotAllowedScreen();
-  //   }
-
-  //   if (user == null) {}
-
-  //   return Scaffold(
-  //     body: SingleChildScrollView(
-  //       child: Container(
-  //         padding: EdgeInsets.all(16),
-  //         child: Column(
-  //           children: [
-  //             Center(
-  //               child: Padding(
-  //                 padding: const EdgeInsets.all(18.0),
-  //                 child: Text(
-  //                   'Beheer',
-  //                   style: GoogleFonts.roboto(
-  //                       fontWeight: FontWeight.w700,
-  //                       fontSize: 25,
-  //                       textStyle: const TextStyle(color: Color(0xFF71C6D1))),
-  //                 ),
-  //               ),
-  //             ),
-  //             buildGrid('Training', gridTitles[0]),
-  //             SizedBox(height: 16),
-  //             buildGrid('Admin', gridTitles[1]),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget buildGrid(String rowName, List<List<String>> cards) {
     return Column(

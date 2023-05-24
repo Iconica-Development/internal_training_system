@@ -32,6 +32,7 @@ class _CreateUserState extends State<CreateUser> {
 
     //Create Firebase Auth user
     FirebaseRegister(userFirstname, userLastname, email, password);
+    
   }
 
   Future<String?> FirebaseRegister(String userFirstname, String userLastname,
@@ -54,6 +55,7 @@ class _CreateUserState extends State<CreateUser> {
         ),
       );
       context.go('/admin');
+      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(
