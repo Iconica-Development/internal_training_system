@@ -31,21 +31,23 @@ class _CreateUserState extends State<CreateUser> {
     final String password = _passwordController.text;
 
     //Create Firebase Auth user
-    FirebaseRegister(email, password);
-
-    //Set user in Firebase Firestore
-    UserService userService =
-        UserService(UserDatasource(firebaseApp: Firebase.app()));
-    userService.createUser(userFirstname, userLastname, email, password);
+    FirebaseRegister(userFirstname, userLastname, email, password);
   }
 
-  Future<String?> FirebaseRegister(String mail, String pwd) async {
+  Future<String?> FirebaseRegister(String userFirstname, String userLastname,
+      String email, String password) async {
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: mail.trim().toLowerCase(),
-        password: pwd,
+        email: email.trim().toLowerCase(),
+        password: password,
       );
+      String userId = credential.user!.uid;
+      UserService userService =
+          UserService(UserDatasource(firebaseApp: Firebase.app()));
+      userService.createUser(
+          userId, userFirstname, userLastname, email, password);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('De nieuwe gebruiker is aangemaakt.'),

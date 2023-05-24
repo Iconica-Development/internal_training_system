@@ -7,10 +7,10 @@ class UserService {
 
   UserService(UserDatasource datasource) : _datasource = datasource;
 
-  Future<void> createUser(String firstName, String lastName, String userName,
-      String userPassword) async {
+  Future<void> createUser(String userId, String firstName, String lastName,
+      String userName, String userPassword) async {
     UserDataModel userDataModel = UserDataModel(
-      id: '',
+      id: userId,
       firstName: firstName,
       lastName: lastName,
       userEmail: userName,
@@ -19,7 +19,7 @@ class UserService {
 
     FlutterRbacUsersDataModel flutterRbacUsersDataModel =
         FlutterRbacUsersDataModel(
-      id: '',
+      id: userId,
       permissions: [],
       roles: [],
     );

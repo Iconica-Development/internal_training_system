@@ -1,5 +1,5 @@
 class FlutterRbacUsersDataModel {
-  final String? id;
+  String? id;
   final List<String>? permissions;
   final List<String>? roles;
 

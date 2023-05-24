@@ -30,21 +30,25 @@ class _BeheerScreenState extends State<BeheerScreen> {
     ],
   ];
 
-  Future<bool> getUserPermission() async {
+  Future<bool> getUserPermission(String userId, String roleId) async {
     FirebaseApp firebaseApp = Firebase.app();
     var firebaseDatasource = FirebaseRbacDatasource(firebaseApp: firebaseApp);
     var rbacService = RbacService(firebaseDatasource);
-    bool hasPermission = await rbacService.hasRole(
-        '4bENHuYKplqyITx0sUk9', 'Iv7eRUhqS9zx5aibgGUd');
+    print('CURRENT USER ID: ' + userId);
+    bool hasPermission =
+        await rbacService.hasRole(userId, 'Iv7eRUhqS9zx5aibgGUd');
     return hasPermission;
   }
 
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return LoginExample();
+    }
 
     return FutureBuilder<bool>(
-      future: getUserPermission(),
+      future: getUserPermission(user.uid, 'Iv7eRUhqS9zx5aibgGUd'),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -52,9 +56,6 @@ class _BeheerScreenState extends State<BeheerScreen> {
           return Text('Error: ${snapshot.error}');
         } else {
           bool isAllowed = snapshot.data ?? false;
-          if (user == null) {
-            return LoginExample();
-          }
           if (!isAllowed) {
             print('PERSON HAS NO PERMISSION');
             return NotAllowedScreen();

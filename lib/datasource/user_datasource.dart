@@ -21,7 +21,7 @@ class UserDatasource {
     },
   );
 
-  late final _userRbacColleciton =
+  late final _userRbacCollection =
       FirebaseFirestore.instanceFor(app: firebaseApp)
           .collection('flutter_rbac_users')
           .withConverter(
@@ -35,8 +35,7 @@ class UserDatasource {
 
   Future<void> createUser(UserDataModel userDataModel,
       FlutterRbacUsersDataModel rbacUsersDataModel) async {
-    _userCollection.doc().set(userDataModel);
-
-    _userRbacColleciton.doc().set(rbacUsersDataModel);
+    _userCollection.doc(userDataModel.id).set(userDataModel);
+    _userRbacCollection.doc(userDataModel.id).set(rbacUsersDataModel);
   }
 }
