@@ -24,7 +24,18 @@ admin.initializeApp();
 const database = admin.firestore();
 
 exports.timerUpdate = functions.pubsub.schedule('every 5 minutes').onRun((context) => {
-    database.doc("NOTIFICATIONS/91xoK9Y5Jz69Nqlhm2Ky").update({ "time": admin.firestore.Timestamp.now() });
+    admin
+        .firestore()
+        .collection("mails")
+        .add({
+            to: "vlusionwebbuilding@gmail.com",
+            message: {
+                subject: "Herrinering voor training",
+                text: "PLACEHOLDER",
+                html: "Hallo [NAAM], je hebt je aangemeld voor de training [TRAININGNAAM]. Deze training begint volgende week.",
+            },
+        })
+        .then(() => console.log("Queued email for delivery!"));
     console.log('Successful timer update');
     return null;
 });
