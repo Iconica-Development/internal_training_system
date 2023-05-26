@@ -21,21 +21,17 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
-const database = admin.firestore();
 
-exports.timerUpdate = functions.pubsub.schedule('every 5 minutes').onRun((context) => {
-    admin
-        .firestore()
-        .collection("mails")
+exports.dailyNotificationForUpcomingTrainings = functions.pubsub.schedule('every 5 minutes').onRun(async (context) => {
+    await admin.firestore().collection("mails")
         .add({
-            to: "vlusionwebbuilding@gmail.com",
-            message: {
-                subject: "Herrinering voor training",
-                text: "PLACEHOLDER",
-                html: "Hallo [NAAM], je hebt je aangemeld voor de training [TRAININGNAAM]. Deze training begint volgende week.",
+            to: ["vlusionwebbuilding@gmail.com"],
+            template: {
+                name: "upcoming_training",
+                data: {
+                    name: "Vick",
+                    training: "Flutter Basics",
+                },
             },
-        })
-        .then(() => console.log("Queued email for delivery!"));
-    console.log('Successful timer update');
-    return null;
+        });
 });
