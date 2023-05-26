@@ -23,15 +23,32 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.dailyNotificationForUpcomingTrainings = functions.pubsub.schedule('every 5 minutes').onRun(async (context) => {
-    await admin.firestore().collection("mails")
-        .add({
+    const today = new Date();
+    const oneWeekFromToday = new Date();
+    oneWeekFromToday.setDate(today.getDate() + 7);
+    oneWeekFromToday.setHours(0, 0, 0, 0);
+
+    console.log("BEGIN VAN SCHEDULE FUNCTION");
+    console.log('One week from today: ' + oneWeekFromToday);
+
+    const trainingsSnapshot = await admin.firestore().collection("training_planning")
+        .where("startDate", ">=", oneWeekFromToday)
+        .where("startDate", "<", new Date(oneWeekFromToday.getTime() + 24 * 60 * 60 * 1000))
+        .get();
+
+    const trainings = trainingsSnapshot.docs.map((doc) => doc.data());
+
+    for (const training of trainings) {
+        console.log("TRAINING GEVONDEN");
+        await admin.firestore().collection("mails").add({
             to: ["vlusionwebbuilding@gmail.com"],
             template: {
                 name: "upcoming_training",
                 data: {
                     name: "Vick",
-                    training: "Flutter Basics",
+                    training: training.trainingName,
                 },
             },
         });
+    }
 });
