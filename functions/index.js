@@ -28,9 +28,6 @@ exports.dailyNotificationForUpcomingTrainings = functions.pubsub.schedule('every
     oneWeekFromToday.setDate(today.getDate() + 7);
     oneWeekFromToday.setHours(0, 0, 0, 0);
 
-    console.log("BEGIN VAN SCHEDULE FUNCTION");
-    console.log('One week from today: ' + oneWeekFromToday);
-
     const trainingsSnapshot = await admin.firestore().collection("training_planning")
         .where("startDate", ">=", oneWeekFromToday)
         .where("startDate", "<", new Date(oneWeekFromToday.getTime() + 24 * 60 * 60 * 1000))
@@ -38,17 +35,29 @@ exports.dailyNotificationForUpcomingTrainings = functions.pubsub.schedule('every
 
     const trainings = trainingsSnapshot.docs.map((doc) => doc.data());
 
-    for (const training of trainings) {
-        console.log("TRAINING GEVONDEN");
-        await admin.firestore().collection("mails").add({
-            to: ["vlusionwebbuilding@gmail.com"],
-            template: {
-                name: "upcoming_training",
-                data: {
-                    name: "Vick",
-                    training: training.trainingName,
+    for (const trainingSnapshot of trainingsSnapshot.docs) {
+        const trainingData = trainingSnapshot.data();
+        const trainingId = trainingSnapshot.id;
+
+        const trainingApplicationsSnapshot = await admin.firestore().collection("training_application")
+            .where("planningId", "==", trainingId)
+            .get();
+
+        const applications = trainingApplicationsSnapshot.docs.map((doc) => doc.data());
+
+        for (const applicationSnapshot of trainingApplicationsSnapshot.docs) {
+            const applicationData = applicationSnapshot.data();
+            await admin.firestore().collection("mails").add({
+                to: [applicationData.userId],
+                template: {
+                    name: "upcoming_training",
+                    data: {
+                        email: applicationData.userId,
+                        training: trainingData.trainingName,
+                    },
                 },
-            },
-        });
+            });
+
+        }
     }
 });
