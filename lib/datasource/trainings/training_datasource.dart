@@ -51,8 +51,8 @@ class TrainingDatasource {
   );
 
   Future<void> createTraining(TrainingDataModel trainingDataModel) async {
-    // print(trainingDataModel.trainingGoals);
-    // _trainingCollection.doc().set(trainingDataModel);
+    print(trainingDataModel.trainingGoals);
+    _trainingCollection.doc().set(trainingDataModel);
   }
 
   Future<void> createTrainingPlanning(
