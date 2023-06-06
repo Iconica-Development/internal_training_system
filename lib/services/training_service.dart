@@ -49,8 +49,7 @@ class TrainingService {
     return _datasource.getAllTrainingApplications(userId);
   }
 
-  Future<TrainingPlanningDataModel?> getTrainingById(
-      String trainingId) async {
+  Future<TrainingPlanningDataModel?> getTrainingById(String trainingId) async {
     return _datasource.getTrainingById(trainingId);
   }
 
