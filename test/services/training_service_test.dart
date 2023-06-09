@@ -85,6 +85,7 @@ void main() {
       verify(() => mockDataSource.createTrainingPlanning(any())).called(1);
     });
 
+
     test(
         'createTrainingApplication should call the data source with correct parameters',
         () async {

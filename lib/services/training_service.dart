@@ -31,7 +31,7 @@ class TrainingService {
     TrainingPlanningDataModel trainingPlanningDataModel =
         TrainingPlanningDataModel(
       id: '',
-      trainingName: trainingName,
+      trainingName: trainingName,https://docs.google.com/document/d/1bto9hPyH_saqvHy8XI1T2g_BGc8OK4PuBIWE15BP_W4/edit#
       trainerName: trainerName,
       startDate: startDate,
       endDate: endDate,
