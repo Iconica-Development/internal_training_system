@@ -49,7 +49,7 @@ class _PlanTrainingState extends State<PlanTraining> {
 
   Future<List<String>> getAllTrainings() async {
     List<String> listOfTrainings = [];
-    var trainings = await trainingService.getAllTrainingsData();
+    var trainings = await trainingService.getAllTrainingsBase();
     trainings.forEach((trainingData) {
       // Access and work with trainingData properties
       listOfTrainings.add(trainingData.trainingName);

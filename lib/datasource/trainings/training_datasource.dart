@@ -60,6 +60,11 @@ class TrainingDatasource {
     _trainingPlanningCollection.doc().set(trainingPlanningDataModel);
   }
 
+  Future<List<TrainingDataModel>> getAllTrainingsBase() async {
+    var trainings = await _trainingCollection.get();
+    return trainings.docs.map((e) => e.data()).toList();
+  }
+
   Future<List<TrainingPlanningDataModel>>
       getAllTrainingPlanningDocuments() async {
     var trainings = await _trainingPlanningCollection.get();
