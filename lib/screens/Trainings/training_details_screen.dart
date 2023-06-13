@@ -145,7 +145,7 @@ class _TrainingDetailsState extends State<TrainingDetails> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    'TRAINING OMSCHRIJVING',
+                                                    'Training omschrijving: PLACEHOLDER',
                                                     style:
                                                         TextStyle(fontSize: 24),
                                                   ),

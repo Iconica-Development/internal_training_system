@@ -40,13 +40,14 @@ class TrainingService {
     _datasource.createTrainingPlanning(trainingPlanningDataModel);
   }
 
+  Future<List<TrainingPlanningDataModel>> getAllTrainingsData() async {
+    return _datasource.getAllTrainingPlanningDocuments();
+  }
+
   Future<List<TrainingDataModel>> getAllTrainingsBase() async {
     return _datasource.getAllTrainingsBase();
   }
 
-  Future<List<TrainingPlanningDataModel>> getAllTrainingsData() async {
-    return _datasource.getAllTrainingPlanningDocuments();
-  }
 
   Future<List<TrainingPlanningDataModel>> getAllTrainingApplications(
       String userId) async {

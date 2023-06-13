@@ -26,7 +26,6 @@ class _BeheerScreenState extends State<BeheerScreen> {
     ],
     [
       ['Training aanpassen', 'LINK'],
-      ['Item 4', 'LINK'],
     ],
   ];
 
