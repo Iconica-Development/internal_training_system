@@ -33,7 +33,6 @@ class _BeheerScreenState extends State<BeheerScreen> {
     FirebaseApp firebaseApp = Firebase.app();
     var firebaseDatasource = FirebaseRbacDatasource(firebaseApp: firebaseApp);
     var rbacService = RbacService(firebaseDatasource);
-    print('CURRENT USER ID: ' + userId);
     bool hasPermission = await rbacService.hasRole(userId, roleId);
     return hasPermission;
   }

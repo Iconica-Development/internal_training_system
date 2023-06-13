@@ -21,7 +21,6 @@ class TrainingDataModel {
   }
 
   factory TrainingDataModel.fromMap(String id, Map<String, dynamic> map) {
-    print(map['trainingGoals']);
     return TrainingDataModel(
       id: id,
       trainingName: map['trainingName'] as String,

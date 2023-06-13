@@ -37,7 +37,6 @@ class _CreateTrainingState extends State<CreateTraining> {
       );
 
       await uploadFiles(); // wait for files to upload
-      print('Downlaod URLS: $downloadUrls');
       if (_goalsController.text.isEmpty) {
         _goalsController.text = '';
       }
@@ -93,7 +92,6 @@ class _CreateTrainingState extends State<CreateTraining> {
     FirebaseApp firebaseApp = Firebase.app();
     var firebaseDatasource = FirebaseRbacDatasource(firebaseApp: firebaseApp);
     var rbacService = RbacService(firebaseDatasource);
-    print('CURRENT USER ID: ' + userId);
     bool hasPermission = await rbacService.hasRole(userId, roleId);
     return hasPermission;
   }

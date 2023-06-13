@@ -63,7 +63,9 @@ class TrainingDatasource {
 
   Future<List<TrainingPlanningDataModel>>
       getAllTrainingPlanningDocuments() async {
-    var trainings = await _trainingPlanningCollection.get();
+    var trainings = await _trainingPlanningCollection
+        .where('startDate', isGreaterThan: DateTime.now())
+        .get();
     return trainings.docs.map((e) => e.data()).toList();
   }
 
