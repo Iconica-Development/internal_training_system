@@ -94,16 +94,6 @@ class ScaffoldWithNavbar extends StatelessWidget {
                 ),
                 NavigationRailDestination(
                   icon: Icon(
-                    Icons.opacity,
-                    color: Colors.white,
-                  ),
-                  label: Text(
-                    'Login',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(
                     Icons.logout,
                     color: Colors.white,
                   ),

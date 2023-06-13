@@ -106,7 +106,8 @@ class _TrainingsState extends State<Trainings> {
                             style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w700,
                               fontSize: 25,
-                              textStyle: const TextStyle(color: Colors.blue),
+                              textStyle:
+                                  const TextStyle(color: Color(0xFF71C6D1)),
                             ),
                           ),
                         ),
