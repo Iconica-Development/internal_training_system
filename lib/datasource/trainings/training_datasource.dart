@@ -95,7 +95,13 @@ class TrainingDatasource {
           .where(FieldPath.documentId, whereIn: planningIds)
           .get();
 
-      return plannedTrainings.docs.map((e) => e.data()).toList();
+      var currentDate = DateTime.now();
+      var futureTrainings = plannedTrainings.docs.where((doc) {
+        DateTime startDate = doc.get('startDate').toDate();
+        return startDate.isAfter(currentDate);
+      }).toList();
+
+      return futureTrainings.map((e) => e.data()).toList();
     } catch (error) {
       print('Error retrieving training applications: $error');
       return [];
