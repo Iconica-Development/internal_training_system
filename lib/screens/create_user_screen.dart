@@ -62,7 +62,8 @@ class _CreateUserState extends State<CreateUser> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('De nieuwe gebruiker is aangemaakt.'),
+          content: Text(
+              'De nieuwe gebruiker is aangemaakt en je bent ingelogd als de nieuwe gebruiker.'),
         ),
       );
       context.go('/admin');
