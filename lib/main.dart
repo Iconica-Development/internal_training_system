@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
 
 class ScaffoldWithNavbar extends StatelessWidget {
   const ScaffoldWithNavbar(this.child, {super.key});
-  final Widget child; // Get “child” since it'll be given based on route path
+  final Widget child;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
