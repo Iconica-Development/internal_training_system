@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/widgets.dart';
 import 'package:web_application/screens/Trainings/plan_training_screen.dart';
 import 'package:web_application/services/training_application_data_model.dart';
 import 'package:web_application/services/training_planning_data_model.dart';
@@ -75,23 +76,30 @@ class TrainingDatasource {
       String userId) async {
     List<dynamic> planningIds = [];
 
-    await _trainingApplicationCollection
-        .where('userId', isEqualTo: userId)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
+    try {
+      final QuerySnapshot querySnapshot = await _trainingApplicationCollection
+          .where('userId', isEqualTo: userId)
+          .get();
+
       querySnapshot.docs.forEach((DocumentSnapshot docSnapshot) {
         dynamic fieldValue = docSnapshot.get('planningId');
         planningIds.add(fieldValue);
       });
-    }).catchError((error) {
-      print('Error: $error');
-    });
 
-    var plannedTrainings = await _trainingPlanningCollection
-        .where(FieldPath.documentId, whereIn: planningIds)
-        .get();
+      if (planningIds.isEmpty) {
+        print('No training applications found for the user.');
+        return [];
+      }
 
-    return plannedTrainings.docs.map((e) => e.data()).toList();
+      var plannedTrainings = await _trainingPlanningCollection
+          .where(FieldPath.documentId, whereIn: planningIds)
+          .get();
+
+      return plannedTrainings.docs.map((e) => e.data()).toList();
+    } catch (error) {
+      print('Error retrieving training applications: $error');
+      return [];
+    }
   }
 
   Future<void> createTrainingApplication(
