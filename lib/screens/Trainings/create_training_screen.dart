@@ -202,7 +202,7 @@ class _CreateTrainingState extends State<CreateTraining> {
                                           TextField(
                                             controller: _goalsController,
                                             decoration: InputDecoration(
-                                              hintText: 'Voer een goal in',
+                                              hintText: 'Voer een doel in',
                                             ),
                                           ),
                                           ElevatedButton(
@@ -210,7 +210,7 @@ class _CreateTrainingState extends State<CreateTraining> {
                                               _addGoal(_goalsController.text);
                                               _goalsController.clear();
                                             },
-                                            child: Text('Voeg goal toe'),
+                                            child: Text('Voeg doel toe'),
                                           ),
                                           Expanded(
                                             child: ListView.builder(
